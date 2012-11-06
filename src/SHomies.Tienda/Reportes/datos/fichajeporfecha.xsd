@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="fichajeporfecha" targetNamespace="http://tempuri.org/fichajeporfecha.xsd" xmlns:mstns="http://tempuri.org/fichajeporfecha.xsd" xmlns="http://tempuri.org/fichajeporfecha.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="fichajeporfecha" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="fichajeporfecha" msprop:Generator_UserDSName="fichajeporfecha">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Fichaje" msprop:Generator_TableClassName="FichajeDataTable" msprop:Generator_TableVarName="tableFichaje" msprop:Generator_TablePropName="Fichaje" msprop:Generator_RowDeletingName="FichajeRowDeleting" msprop:Generator_UserTableName="Fichaje" msprop:Generator_RowChangingName="FichajeRowChanging" msprop:Generator_RowEvHandlerName="FichajeRowChangeEventHandler" msprop:Generator_RowDeletedName="FichajeRowDeleted" msprop:Generator_RowEvArgName="FichajeRowChangeEvent" msprop:Generator_RowChangedName="FichajeRowChanged" msprop:Generator_RowClassName="FichajeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="nombrefichadora" msprop:Generator_ColumnVarNameInTable="columnnombrefichadora" msprop:Generator_ColumnPropNameInRow="nombrefichadora" msprop:Generator_ColumnPropNameInTable="nombrefichadoraColumn" msprop:Generator_UserColumnName="nombrefichadora" type="xs:string" minOccurs="0" />
+              <xs:element name="montofichaje" msprop:Generator_ColumnVarNameInTable="columnmontofichaje" msprop:Generator_ColumnPropNameInRow="montofichaje" msprop:Generator_ColumnPropNameInTable="montofichajeColumn" msprop:Generator_UserColumnName="montofichaje" type="xs:decimal" minOccurs="0" />
+              <xs:element name="orden" msprop:Generator_ColumnVarNameInTable="columnorden" msprop:Generator_ColumnPropNameInRow="orden" msprop:Generator_ColumnPropNameInTable="ordenColumn" msprop:Generator_UserColumnName="orden" type="xs:int" minOccurs="0" />
+              <xs:element name="producto" msprop:Generator_ColumnVarNameInTable="columnproducto" msprop:Generator_ColumnPropNameInRow="producto" msprop:Generator_ColumnPropNameInTable="productoColumn" msprop:Generator_UserColumnName="producto" type="xs:string" minOccurs="0" />
+              <xs:element name="cantidad" msprop:Generator_ColumnVarNameInTable="columncantidad" msprop:Generator_ColumnPropNameInRow="cantidad" msprop:Generator_ColumnPropNameInTable="cantidadColumn" msprop:Generator_UserColumnName="cantidad" type="xs:int" minOccurs="0" />
+              <xs:element name="precioventa" msprop:Generator_ColumnVarNameInTable="columnprecioventa" msprop:Generator_ColumnPropNameInRow="precioventa" msprop:Generator_ColumnPropNameInTable="precioventaColumn" msprop:Generator_UserColumnName="precioventa" type="xs:decimal" minOccurs="0" />
+              <xs:element name="total" msprop:Generator_ColumnVarNameInTable="columntotal" msprop:Generator_ColumnPropNameInRow="total" msprop:Generator_ColumnPropNameInTable="totalColumn" msprop:Generator_UserColumnName="total" type="xs:decimal" minOccurs="0" />
+              <xs:element name="comision" msprop:Generator_ColumnVarNameInTable="columncomision" msprop:Generator_ColumnPropNameInRow="comision" msprop:Generator_ColumnPropNameInTable="comisionColumn" msprop:Generator_UserColumnName="comision" type="xs:decimal" minOccurs="0" />
+              <xs:element name="totalComision" msprop:Generator_ColumnVarNameInTable="columntotalComision" msprop:Generator_ColumnPropNameInRow="totalComision" msprop:Generator_ColumnPropNameInTable="totalComisionColumn" msprop:Generator_UserColumnName="totalComision" type="xs:decimal" minOccurs="0" />
+              <xs:element name="fechaproceso" msprop:Generator_ColumnVarNameInTable="columnfechaproceso" msprop:Generator_ColumnPropNameInRow="fechaproceso" msprop:Generator_ColumnPropNameInTable="fechaprocesoColumn" msprop:Generator_UserColumnName="fechaproceso" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using SHomies.Conexion;
+
+namespace SHomies.Core.Relax
+{
+    public class Orden : Conexion.EntidadConexion
+    {
+        public int Id { get; set; }
+        public Persona.Cliente Cliente { get; set; }
+        public Sistema.AuditoriaSistema AuditoriaSistema { get; set; }
+        public decimal TotalVenta { get; set; }
+        public decimal TotalComision { get; set; }
+        public TipoPago TipoPago { get; set; }
+        public TipoComprobante TipoComprobante { get; set; }
+        public Mesa Mesa { get; set; }
+        public Sistema.Usuario Mozo { get; set; }
+
+        public Orden(IConexion iConexion)
+        {
+            this.Conexion = iConexion;
+            this.Cliente = new Persona.Cliente(iConexion);
+            this.AuditoriaSistema = new Sistema.AuditoriaSistema(iConexion);
+            this.Mesa = new Mesa(this.Conexion);
+            this.Mozo = new Sistema.Usuario(this.Conexion);
+
+            this.TotalVenta = 0;
+            this.TotalComision = 0;
+            this.TipoPago = Relax.TipoPago.EFECTIVO;
+            this.TipoComprobante = Relax.TipoComprobante.BOLETA;
+        }
+
+
+    }
+}

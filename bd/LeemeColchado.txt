@@ -1,0 +1,18 @@
+Pasos para instalación:
+
+1.- Desisntalar SHomies desde Agregar o Quitar Programas.
+
+2.- Instalar SHomies desde instalador.
+
+3.- Ejecutar los sgtes comandos desde RUn SQl Plus.
+
+	- connect
+	- sys@xe as sysdba
+	- password
+	- drop user sistema cascade;
+	- commit;
+	
+	- @(arroba y arrastras el script sql)
+	- commit;
+
+4.- Cambiar app.config para configurar impresora.

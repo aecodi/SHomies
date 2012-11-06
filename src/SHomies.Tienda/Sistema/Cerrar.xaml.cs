@@ -1,0 +1,254 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using SHomies.Utilitario;
+using SHomies.Core.Operaciones;
+
+namespace SHomies.Tienda.Sistema
+{
+    /// <summary>
+    /// Interaction logic for Cerrar.xaml
+    /// </summary>
+    public partial class Cerrar : Window
+    {
+        private Core.Sistema.AuditoriaSistema auditoria;
+        private Conexion.IConexion conexion;
+        private EEstadoFormulario estadoFormulario;
+        private Clases.DetalleCierreViewModel concepto;
+        public Cerrar()
+        {
+            InitializeComponent();
+        }
+
+        public Cerrar(Core.Sistema.AuditoriaSistema iAuditoria, Conexion.IConexion iConexion)
+        {
+            InitializeComponent();
+            this.auditoria = iAuditoria;
+            this.conexion = iConexion;
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            estadoFormulario = EEstadoFormulario.Load;
+            try
+            {
+                this.txbTituloDelFormulario.Text = "Cierre del Sistema";
+                this.dtpFechaActual.Text = DateTime.Parse(DateTime.Now.ToShortDateString()).AddDays(-1).ToShortDateString();
+
+                this.auditoria.GetUltimaFechaSistema();
+
+                this.dtpFechaActual.Text = this.auditoria.FechaSistema.ToShortDateString();
+                this.chkIsClose.IsChecked = !this.auditoria.EsAperturado;
+
+                this.grbDetalle.IsEnabled = this.auditoria.EsAperturado;
+                this.btnProcesar.IsEnabled = this.auditoria.EsAperturado;
+                this.btnImprimir.IsEnabled = !this.auditoria.EsAperturado;
+
+                this.GetDetalleCierre();
+
+                estadoFormulario = EEstadoFormulario.EndLoad;
+            }
+            catch (Utilitario.ExepcionSHomies)
+            {
+                this.chkIsClose.IsChecked = !this.auditoria.EsAperturado;
+            }
+            catch (Exception ex)
+            {
+                this.estadoFormulario = EEstadoFormulario.ErrorLoad;
+                MessageBox.Show(ex.Message);
+            }
+
+            Clases.FuncionFormulario.ValidaCargaFormulario(estadoFormulario, this);
+        }
+
+        private void GetDetalleCierre()
+        {
+            List<Clases.DetalleCierreViewModel> detalleCierre = new Clases.DetalleCierreViewModel(this.conexion).GetDetalleDelCierre(this.auditoria);
+            this.dtgConceptos.ItemsSource = detalleCierre.OrderBy(x => x.DescripcionConcepto);
+
+            decimal liquidez = 0;
+            foreach (Clases.DetalleCierreViewModel detalle in detalleCierre)
+            {
+                liquidez += detalle.Concepto.Tipo == (int)TipoConcepto.EGRESO ? detalle.Monto * (-1) : detalle.Monto;
+            }
+            this.txbLiquidez.Text = Funcion.FormatoDecimal(liquidez);
+        }
+
+        private void btnCerrar_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void dtgConceptos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (this.estadoFormulario == EEstadoFormulario.EndLoad)
+                {
+                    if (this.dtgConceptos.Items.Count > 0 && this.dtgConceptos.SelectedIndex >= 0)
+                    {
+                        if (this.dtgConceptos.SelectedCells[0].Item != null)
+                        {
+                            concepto =
+                                (Clases.DetalleCierreViewModel)this.dtgConceptos.SelectedCells[0].Item;
+                            concepto.Conexion = this.conexion;
+                            if (concepto != null)
+                            {
+                                this.txbConcepto.Text = concepto.DescripcionConcepto;
+                                decimal montoConcepto = concepto.Monto;
+                                if (this.concepto.Concepto.Tipo == (int)Core.Operaciones.TipoConcepto.EGRESO)
+                                    montoConcepto *= -1;
+                                switch (concepto.Concepto.Id)
+                                {
+                                    case 1:
+                                    case 7:
+                                        this.txtMonto.IsEnabled = false;
+                                        this.btnGrabar.IsEnabled = false;
+                                        this.txtMonto.Text = Funcion.FormatoDecimal(montoConcepto);
+                                        break;
+                                    default:
+                                        this.txtMonto.IsEnabled = true;
+                                        this.btnGrabar.IsEnabled = true;
+                                        this.txtMonto.Text = montoConcepto.ToString();
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Utilitario.ExepcionSHomies sx)
+            {
+                MessageBox.Show(sx.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnGrabar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.concepto == null)
+                    throw new Utilitario.ExepcionSHomies("Seleccione concepto para actualizar monto");
+                this.concepto.Monto = Funcion.ConvertTo<decimal>(this.txtMonto.Text, 0);
+
+                this.concepto.Conexion.BeginTransaction();
+                this.concepto.ActualizaMonto();
+                this.concepto.Conexion.Commit();
+
+                MessageBox.Show("Monto del concepto actualizado");
+
+                this.GetDetalleCierre();
+            }
+            catch (Utilitario.ExepcionSHomies sx)
+            {
+                MessageBox.Show(sx.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (this.concepto != null)
+                    this.concepto.Conexion.RoolBack();
+            }
+        }
+
+        private void btnProcesar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.conexion.BeginTransaction();
+                foreach (Clases.DetalleCierreViewModel concepto in this.dtgConceptos.ItemsSource)
+                {
+                    concepto.Conexion = this.conexion;
+                    concepto.ActualizaMonto();
+                }
+                this.auditoria.Cerrar();
+                this.grbDetalle.IsEnabled = this.auditoria.EsAperturado;
+                this.btnProcesar.IsEnabled = this.auditoria.EsAperturado;
+
+                this.ImprimirCierre();
+
+                MessageBox.Show("Sistema cerrado con exito.");
+
+                this.btnImprimir.IsEnabled = true;
+                this.conexion.Commit();
+            }
+            catch (Utilitario.ExepcionSHomies sx)
+            {
+                MessageBox.Show(sx.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                this.conexion.RoolBack();
+            }
+        }
+
+        private void btnImprimir_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.ImprimirCierre();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void ImprimirCierre()
+        {
+            try
+            {
+                List<Clases.DetalleCierreViewModel> detalleCierre = new Clases.DetalleCierreViewModel(this.conexion).GetDetalleDelCierre(this.auditoria);
+
+                Ticket ticket = new Ticket();
+                ticket.Title = "EL RELAX";
+                ticket.AddCabecera("FECHA", Alineacion.Left, Alineacion.Left, 10, this.auditoria.FechaSistema.ToShortDateString());
+                ticket.AddCebeceraDetalle("Concepto", Alineacion.Left, Alineacion.Left, 26);
+                ticket.AddCebeceraDetalle("Monto", Alineacion.Right, Alineacion.Right, 9);
+
+                decimal liquidez = 0;
+                foreach (Clases.DetalleCierreViewModel detalle in detalleCierre)
+                {
+                    liquidez += detalle.Concepto.Tipo == (int)TipoConcepto.EGRESO ? detalle.Monto * (-1) : detalle.Monto;
+                    ticket.AddItemsDetails(detalle.Concepto.Descripcion, Funcion.FormatoDecimal(
+                        detalle.Concepto.Tipo == (int)TipoConcepto.EGRESO ? detalle.Monto * (-1) : detalle.Monto));
+                }
+
+                ticket.AddTotal("Liquidez", Alineacion.Right, Alineacion.Right, 25, Funcion.FormatoDecimal(liquidez));
+
+                ticket.itemsPie.Add("Los esperamos");
+                String impresora = System.Configuration.ConfigurationSettings.AppSettings["Impresora"].ToString();
+
+                ticket.Imprimir(impresora);
+
+
+                this.txbLiquidez.Text = Funcion.FormatoDecimal(liquidez);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+    }
+}

@@ -1,0 +1,17 @@
+﻿<Application x:Class="SHomies.Tienda.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="Usuario/Login.xaml">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/ReuxablesLegacy;component/mercury.xaml" />
+                <ResourceDictionary Source="/Themes/Theme.xaml" />
+                <ResourceDictionary Source="/Themes/buttons.xaml" />
+                <ResourceDictionary Source="/Themes/ScrollBar.xaml" />
+                <ResourceDictionary Source="/Themes/datagrid.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>

@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using SHomies.Conexion;
+
+namespace SHomies.Core.Relax
+{
+    public class DetalleOrden : Conexion.EntidadConexion
+    {
+        public Almacen.Producto Producto { get; set; }
+        public int Cantidad { get; set; }
+        public decimal Total { get; set; }
+
+        public DetalleOrden(IConexion iConexion)
+        {
+            this.Conexion = iConexion;
+            this.Producto = new Almacen.Producto(iConexion);
+            this.Cantidad = 0;
+            this.Total = 0;
+        }
+    }
+}

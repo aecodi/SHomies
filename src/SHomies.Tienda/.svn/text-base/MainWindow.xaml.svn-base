@@ -1,0 +1,30 @@
+﻿<Window x:Class="SHomies.Tienda.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Titulo" 
+        Height="228" 
+        Width="507" 
+        WindowStartupLocation="CenterScreen" 
+        WindowStyle="None" 
+        AllowsTransparency="True" 
+        Background="{x:Null}" Icon="/SHomies.Tienda;component/tienda.ico">
+  <Border BorderBrush="Silver" Background="White" BorderThickness="1" Height="188" HorizontalAlignment="Left" Name="border4" VerticalAlignment="Top" Width="486" CornerRadius="25,0,0,0" >
+    <Grid Width="470" Height="175">
+      <Border BorderBrush="Silver" BorderThickness="1" Height="165" HorizontalAlignment="Left" Margin="6,0,0,6" Name="brdProducto" VerticalAlignment="Bottom" Width="458" CornerRadius="10,0,0,0">
+        <Grid Height="157" Name="grid2" Width="450">
+          <Border BorderBrush="Black" BorderThickness="1.5,0,1.5,0" CornerRadius="0,20,0,20" Height="149" HorizontalAlignment="Left" Margin="6,6,0,0" Name="border3" VerticalAlignment="Top" Width="436">
+            <Grid Height="138" Name="grid3" Width="412">
+              <Button Content="Categoria" Height="23" HorizontalAlignment="Left" Margin="37,45,0,0" Name="btnCategoria" VerticalAlignment="Top" Width="75" Click="btnCategoria_Click" />
+              <Button Content="Producto" Height="23" HorizontalAlignment="Left" Margin="118,45,0,0" Name="btnNuevoProducto" VerticalAlignment="Top" Width="79" Click="btnNuevoProducto_Click" />
+              <Button Content="Nueva Orden" Height="23" HorizontalAlignment="Left" Margin="37,74,0,0" Name="btnNuevaOrden" VerticalAlignment="Top" Width="79" Click="btnNuevaOrden_Click" />
+              <Button Content="Apertura Sistema" Height="23" HorizontalAlignment="Left" Margin="203,45,0,0" Name="btnApertura" VerticalAlignment="Top" Width="104" Click="btnApertura_Click" />
+              <Button Content="Cerrar Sistema" Height="23" HorizontalAlignment="Left" Margin="118,74,0,0" Name="btnCierraSistema" VerticalAlignment="Top" Width="104" Click="btnCierraSistema_Click" />
+              <Button Content="Venta Fichadora" Height="23" HorizontalAlignment="Left" Margin="226,74,0,0" Name="btnVentaFichadora" VerticalAlignment="Top" Width="104" Click="btnVentaFichadora_Click" />
+            </Grid>
+          </Border>
+        </Grid>
+      </Border>
+      <TextBlock FontFamily="Arial" FontSize="16" FontWeight="Bold" Foreground="#FF042271" Height="17" HorizontalAlignment="Center" Margin="85,8,113,482" Name="textBlock2" Text="titulo" TextAlignment="Center" VerticalAlignment="Center" Width="273" />
+    </Grid>
+  </Border>
+</Window>    

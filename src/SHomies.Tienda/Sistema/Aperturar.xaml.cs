@@ -1,0 +1,109 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using SHomies.Utilitario;
+
+namespace SHomies.Tienda.Sistema
+{
+    /// <summary>
+    /// Interaction logic for Aperturar.xaml
+    /// </summary>
+    public partial class Aperturar : Window
+    {
+        private EEstadoFormulario estadoFormulario;
+        private Core.Sistema.AuditoriaSistema auditoria;
+        private Conexion.IConexion conexion;
+        public Aperturar()
+        {
+            InitializeComponent();
+        }
+
+        public Aperturar(Core.Sistema.AuditoriaSistema iAuditoria, Conexion.IConexion iConexion)
+        {
+            this.auditoria = iAuditoria;
+            this.conexion = iConexion;
+            InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            estadoFormulario = EEstadoFormulario.Load;
+            try
+            {
+                this.txbTituloDelFormulario.Text = "Apertura del Sistema";
+                this.dtpFechaActual.Text = DateTime.Parse(DateTime.Now.ToShortDateString()).AddDays(-1).ToShortDateString();
+                this.dtpFechaAperturar.Text = DateTime.Now.ToShortDateString();
+
+                this.auditoria.GetUltimaFechaSistema();
+
+                if (!this.auditoria.EsAperturado)
+                {
+                    this.dtpFechaActual.Text = this.auditoria.FechaSistema.ToShortDateString();
+                    this.chkIsClose.IsChecked = !this.auditoria.EsAperturado;
+                }
+                else
+                {
+                    throw new Exception(string.Concat("Sistema no cerrado a la fecha [", this.auditoria.FechaSistema.ToShortDateString(), "]"));
+                }
+
+                estadoFormulario = EEstadoFormulario.EndLoad;
+            }
+            catch (Utilitario.ExepcionSHomies)
+            {
+                this.chkIsClose.IsChecked = this.auditoria.EsAperturado;
+            }
+            catch (Exception ex)
+            {
+                this.estadoFormulario = EEstadoFormulario.ErrorLoad;
+                MessageBox.Show(ex.Message);
+            }
+
+            Clases.FuncionFormulario.ValidaCargaFormulario(estadoFormulario, this);
+        }
+
+        private void btnAperturar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.auditoria.Conexion.BeginTransaction();
+                DateTime fechaAperturar = Funcion.ConvertTo<DateTime>(this.dtpFechaAperturar.Text, DateTime.Now);
+
+                if (fechaAperturar <= this.auditoria.FechaSistema &&
+                    this.auditoria.EsAperturado)
+                    throw new Utilitario.ExepcionSHomies("Fecha de apertura no puede ser menor o igual a la fecha actual del sistema");
+
+                this.auditoria.FechaSistema = fechaAperturar;
+                this.auditoria.Aperturar();
+                MessageBox.Show(string.Concat("Sistema aperturado con exito a la fecha [", this.auditoria.FechaSistema.ToShortDateString(), "]"));
+                this.dtpFechaAperturar.IsEnabled = false;
+                this.auditoria.Conexion.Commit();
+            }
+            catch (Utilitario.ExepcionSHomies sx)
+            {
+                MessageBox.Show(sx.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                this.auditoria.Conexion.RoolBack();
+            }
+        }
+
+        private void btnCerrar_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+    }
+}

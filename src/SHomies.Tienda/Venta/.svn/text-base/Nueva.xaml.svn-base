@@ -1,0 +1,166 @@
+﻿<Window x:Class="SHomies.Tienda.Venta.Nueva"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:local="clr-namespace:SHomies.Tienda.Clases"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Orden" Height="654" Width="875" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Loaded="Window_Loaded"
+        Background="{x:Null}" Icon="/SHomies.Tienda;component/tienda.ico">
+  <Window.Resources>
+    <local:ConvierteImagen x:Key="ImagenCategoria" />
+    <local:ConvierteImagen x:Key="ImagenProducto" />
+    <local:ConvierteFormatoDecimal x:Key="FormatoDecimal" />
+  </Window.Resources>
+  <Border BorderBrush="Silver" Background="White" BorderThickness="1" Height="615" HorizontalAlignment="Left" Name="border4" VerticalAlignment="Top" Width="833" CornerRadius="25" >
+    <Grid Width="828">
+      <Border BorderBrush="Silver" BorderThickness="1" Height="492" HorizontalAlignment="Left" Margin="339,105,0,0" Name="brdDetalle" VerticalAlignment="Top" Width="469" CornerRadius="0,10,10,0">
+        <Grid Height="480" Name="grid1" Width="455">
+          <TabControl Name="tabDetalleVenta" Margin="6,184,6,6">
+            <TabItem Header="Detalle" Name="tabDetalleProducto">
+              <Grid Height="257" Width="435">
+                <TextBlock Height="Auto" HorizontalAlignment="Left" Margin="244,235,0,6" Text="Total :" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="55" Foreground="Black" FontWeight="Bold" />
+                <TextBlock DataContext="{Binding}" FontSize="15" FontWeight="Bold" Height="Auto" HorizontalAlignment="Right" Margin="0,232,37,5" Name="txbTotalVenta" Text="0.00" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="91" Foreground="Black" />
+                <DataGrid AutoGenerateColumns="False" Height="225" HorizontalAlignment="Left" Margin="6,5,0,0" Name="dtgDetalleVenta" VerticalAlignment="Top" Width="423" GridLinesVisibility="None" HeadersVisibility="None" CanUserDeleteRows="False" RowDetailsVisibilityMode="VisibleWhenSelected">
+                  <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Producto" IsReadOnly="True" Width="395" >
+                      <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                          <Border BorderBrush="DarkGray"  BorderThickness="1,0,1,0" CornerRadius="0,10,0,10" HorizontalAlignment="Left" Name="border3" VerticalAlignment="Top" Width="393">
+                            <Grid Height="28" Name="grid3" Width="393">
+                              <Image Height="24" HorizontalAlignment="Left" Margin="2,2,0,0" Name="image1" Source="{Binding Path=Imagen, Converter={StaticResource ImagenProducto}}" Stretch="Fill" VerticalAlignment="Top" Width="24" />
+                              <TextBlock FontSize="11" FontWeight="Normal" Height="24" Margin="28,2,102,0" Name="textBlock3" Text="{Binding Path=DescripcionProducto}" VerticalAlignment="Top" />
+                              <TextBlock FontSize="11" FontWeight="Normal" Height="18" HorizontalAlignment="Right" Margin="0,10,6,0" Name="textBlock1" Text="{Binding Path=PrecioProducto}" VerticalAlignment="Top" Width="50" TextAlignment="Right" />
+                              <TextBlock FontSize="11" FontWeight="Normal" Height="18" HorizontalAlignment="Right" Margin="0,10,51,0" Name="textBlock2" Text="x" VerticalAlignment="Top" Width="8" />
+                              <TextBlock FontSize="11" FontWeight="Normal" Height="18" HorizontalAlignment="Right" Margin="0,10,65,0" Name="textBlock4" Text="{Binding Path=Cantidad}" VerticalAlignment="Top" Width="30"  TextAlignment="Right"/>
+                            </Grid>
+                          </Border>
+                        </DataTemplate>
+                      </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                  </DataGrid.Columns>
+                </DataGrid>
+              </Grid>
+            </TabItem>
+            <TabItem Header="Comision" Name="tabDetalleComision">
+              <Grid Height="257" Width="435">
+                <TextBlock FontWeight="Bold" Foreground="Black" Height="Auto" HorizontalAlignment="Left" Margin="244,235,0,6" Text="Total :" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="55" />
+                <TextBlock DataContext="{Binding}" FontSize="15" FontWeight="Bold" Foreground="Black" Height="Auto" HorizontalAlignment="Right" Margin="0,232,37,6" Name="txbTotalComision" Text="0.00" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="91" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="77,6,0,0" Name="cboFichadora" VerticalAlignment="Top" Width="161" DisplayMemberPath="Nombres" SelectedValuePath="Id"></ComboBox>
+                <TextBlock FontWeight="Bold" Height="Auto" HorizontalAlignment="Left" Margin="6,8,0,233" Text="Fichadora :" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="63" />
+                <Button Content="Agregar" Height="23" HorizontalAlignment="Left" Margin="244,6,0,0" Name="btnFichadora" VerticalAlignment="Top" Width="75" Click="btnFichadora_Click" />
+                <DataGrid AutoGenerateColumns="False" GridLinesVisibility="None" HeadersVisibility="None" Height="191" HorizontalAlignment="Left" Margin="6,36,0,0" Name="dtgFichadoras" VerticalAlignment="Top" Width="423">
+                  <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Fichadora" IsReadOnly="True" Width="395">
+                      <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                          <Border BorderBrush="DarkGray" BorderThickness="1,0,1,0" CornerRadius="0,10,0,10" HorizontalAlignment="Left" Name="border3" VerticalAlignment="Top" Width="393">
+                            <Grid Height="28" Name="grid3" Width="393">
+                              <TextBlock FontSize="11" FontWeight="SemiBold" Height="24" Margin="28,2,66,0" Name="textBlock3" Text="{Binding Path=NombreFichadora}" VerticalAlignment="Top" />
+                              <TextBlock FontSize="12" FontWeight="SemiBold" Height="18" HorizontalAlignment="Right" Margin="0,5,8,0" Name="textBlock1" Text="{Binding Path=MontoFichaje}" VerticalAlignment="Top" Width="53" />
+                            </Grid>
+                          </Border>
+                        </DataTemplate>
+                      </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                  </DataGrid.Columns>
+                </DataGrid>
+              </Grid>
+            </TabItem>
+          </TabControl>
+          <Grid Height="180" HorizontalAlignment="Left" Margin="2,2,0,0" Name="grdIngresaDetalle" VerticalAlignment="Top" Width="451" IsEnabled="False">
+            <Button Content="1" Height="42" HorizontalAlignment="Left" Margin="4,36,0,0" Name="btn1" VerticalAlignment="Top" Width="39" FontSize="36" FontWeight="Bold" Click="btnNumber_Click" />
+            <Button Content="2" FontSize="36" FontWeight="Bold" Height="42" Margin="45,36,367,0" Name="btn2" VerticalAlignment="Top" Click="btnNumber_Click" />
+            <Button Content="3" FontSize="36" FontWeight="Bold" Height="42" Margin="86,36,326,0" Name="btn3" VerticalAlignment="Top" Click="btnNumber_Click" />
+            <Button Content="4" FontSize="36" FontWeight="Bold" Height="42" HorizontalAlignment="Left" Margin="127,36,0,0" Name="btn4" VerticalAlignment="Top" Width="39" Click="btnNumber_Click" />
+            <Button Content="5" FontSize="36" FontWeight="Bold" Height="42" Margin="4,79,408,0" Name="btn5" VerticalAlignment="Top" Click="btnNumber_Click" />
+            <Button Content="6" FontSize="36" FontWeight="Bold" Height="42" HorizontalAlignment="Left" Margin="45,79,0,0" Name="btn6" VerticalAlignment="Top" Width="39" Click="btnNumber_Click" />
+            <Button Content="7" FontSize="36" FontWeight="Bold" Height="42" HorizontalAlignment="Left" Margin="86,79,0,0" Name="btn7" VerticalAlignment="Top" Width="39" Click="btnNumber_Click" />
+            <Button Content="8" FontSize="36" FontWeight="Bold" Height="42" HorizontalAlignment="Left" Margin="127,79,0,0" Name="btn8" VerticalAlignment="Top" Width="39" Click="btnNumber_Click" />
+            <Button Content="9" FontSize="36" FontWeight="Bold" Height="42" HorizontalAlignment="Left" Margin="4,122,0,0" Name="btn9" VerticalAlignment="Top" Width="39" Click="btnNumber_Click" />
+            <Button Content="0" FontSize="36" FontWeight="Bold" Height="42" HorizontalAlignment="Left" Margin="45,122,0,0" Name="btn0" VerticalAlignment="Top" Width="39" Click="btnNumber_Click" />
+            <Button Content="C" FontSize="36" FontWeight="Bold" Height="42" HorizontalAlignment="Left" Margin="86,122,0,0" Name="btnCleanCantidad" VerticalAlignment="Top" Width="80" Click="btnCleanCantidad_Click" />
+
+            <TextBlock Height="Auto" HorizontalAlignment="Left" Margin="170,62,0,102" Text="Cantidad :" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="55" />
+            <TextBlock Height="Auto" HorizontalAlignment="Right" Margin="0,84,226,80" Text="Total :" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="55" />
+            <TextBlock Height="Auto" HorizontalAlignment="Right" Margin="0,37,67,127" Text="Comisión :" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="62" />
+            <TextBlock FontWeight="Bold" Height="Auto" HorizontalAlignment="Left" Margin="4,8,0,156" Text="Producto :" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="63" />
+            <TextBlock Height="Auto" HorizontalAlignment="Left" Margin="166,38,0,126" Text="Precio :" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="59" />
+            <TextBlock FontSize="15" FontWeight="Bold" Height="Auto" HorizontalAlignment="Right" Margin="0,6,4,154" Name="txbNameProduct" Text="" TextAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="374" />
+            <TextBlock DataContext="{Binding}" FontSize="15" FontWeight="Bold" Height="Auto" HorizontalAlignment="Right" Margin="0,36,4,124" Name="txbComision" Text="" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="57" />
+            <TextBlock DataContext="{Binding}" FontSize="15" FontWeight="Bold" Height="Auto" HorizontalAlignment="Right" Margin="0,0,148,124" Name="txbPrecio" Text="" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="78" />
+            <TextBlock DataContext="{Binding}" FontSize="15" FontWeight="Bold" Height="Auto" HorizontalAlignment="Right" Margin="0,60,148,101" Name="txbCantidad" Text="" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="78" />
+            <TextBlock DataContext="{Binding}" FontSize="15" FontWeight="Bold" Height="Auto" HorizontalAlignment="Right" Margin="0,82,148,79" Name="txbTotal" Text="" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="78" />
+            <Button Content="Agregar" Height="23" HorizontalAlignment="Left" Margin="172,141,0,0" Name="btnAgregar" VerticalAlignment="Top" Width="75" Click="btnAgregar_Click" />
+            <Button Content="Grabar" Height="23" HorizontalAlignment="Left" Margin="253,141,0,0" Name="btnGrabar" VerticalAlignment="Top" Width="75" Click="btnGrabar_Click" />
+          </Grid>
+        </Grid>
+      </Border>
+      <Border BorderBrush="Silver" BorderThickness="1" Height="492" HorizontalAlignment="Left" Margin="19,105,0,0" Name="brdProducto" VerticalAlignment="Top" Width="316" CornerRadius="10,0,0,10">
+        <Grid Height="483" Name="grid2" Width="305">
+          <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" GridLinesVisibility="None" HorizontalGridLinesBrush="#FFDBDBDB" ItemsSource="{Binding Collection}" Margin="5,5,4,299" Name="dtgCategorias" RowDetailsVisibilityMode="Collapsed" SelectionChanged="dtgCategorias_SelectionChanged" SelectionMode="Single">
+            <DataGrid.Columns>
+              <DataGridTemplateColumn Header="Categorias" IsReadOnly="True" Width="267">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <Border BorderBrush="DarkGray"  BorderThickness="1,0,1,0" CornerRadius="0,10,0,10" HorizontalAlignment="Left" Name="border3" VerticalAlignment="Top" Width="261">
+                      <Grid Height="28" Name="grid3" Width="257">
+                        <Image Height="24" HorizontalAlignment="Left" Margin="2,2,0,0" Name="image1" Source="{Binding Path=Imagen, Converter={StaticResource ImagenCategoria}}" Stretch="Fill" VerticalAlignment="Top" Width="24" />
+                        <TextBlock FontSize="11" FontWeight="Normal" Height="24" HorizontalAlignment="Left" Margin="28,2,0,0" Name="textBlock3" Text="{Binding Path=Descripcion}" VerticalAlignment="Top" Width="223" />
+                      </Grid>
+                    </Border>
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+            </DataGrid.Columns>
+          </DataGrid>
+          <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" GridLinesVisibility="None" HorizontalGridLinesBrush="#FFDBDBDB" ItemsSource="{Binding Collection}" Margin="6,190,3,6" Name="dtgProductos" RowDetailsVisibilityMode="Collapsed" SelectionChanged="dtgProductos_SelectionChanged" SelectionMode="Single">
+            <DataGrid.Columns>
+              <DataGridTemplateColumn Header="Producto" IsReadOnly="True" Width="267">
+                <DataGridTemplateColumn.CellTemplate>
+                  <DataTemplate>
+                    <Border BorderBrush="DarkGray"  BorderThickness="1,0,1,0" CornerRadius="0,10,0,10" HorizontalAlignment="Left" Name="border3" VerticalAlignment="Top" Width="261">
+                      <Grid Height="28" Name="grid3" Width="257">
+                        <Image Height="24" HorizontalAlignment="Left" Margin="2,2,0,0" Name="image1" Source="{Binding Path=Imagen, Converter={StaticResource ImagenProducto}}" Stretch="Fill" VerticalAlignment="Top" Width="24" />
+                        <TextBlock FontSize="11" FontWeight="Normal" Height="24" Margin="28,2,51,0" Name="textBlock3" Text="{Binding Path=Descripcion}" VerticalAlignment="Top" />
+                        <TextBlock FontSize="11" FontWeight="Normal" Height="18" HorizontalAlignment="Right" Margin="0,10,0,5" Name="textBlock1" Text="{Binding Path=PrecioVenta, Converter={StaticResource FormatoDecimal}}" VerticalAlignment="Top" Width="53" TextAlignment="Right" />
+                      </Grid>
+                    </Border>
+                  </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+              </DataGridTemplateColumn>
+            </DataGrid.Columns>
+          </DataGrid>
+        </Grid>
+      </Border>
+      <TextBlock Foreground="#FF042271" Height="Auto" HorizontalAlignment="Left" Margin="65,42,0,0" Name="NroOrden" Text="Nro. Orden" VerticalAlignment="Top" Width="Auto" FontWeight="Bold" />
+      <Border BorderBrush="Black" BorderThickness="1.5,0,1.5,0" CornerRadius="0,20,0,20" Height="35" HorizontalAlignment="Left" Margin="25,56,0,0" Name="borderOrderNo" VerticalAlignment="Top" Width="150">
+        <TextBlock FontFamily="Arial" FontSize="18" FontWeight="Bold" Foreground="Black" Height="21" HorizontalAlignment="Center" Name="txbNroOrden" Text="No Generado" VerticalAlignment="Center" Width="Auto" />
+      </Border>
+      <Border BorderBrush="Black" BorderThickness="1.5,0,1.5,0" CornerRadius="0,20,0,20" Height="35" HorizontalAlignment="Left" Margin="185,58,0,0" Name="border3" VerticalAlignment="Top" Width="249">
+        <Grid Height="31" Name="grid3" Width="243">
+          <TextBlock FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Height="13" HorizontalAlignment="Center" Margin="6,7,174,11" Name="textBlock1" Text="Nro. Orden" VerticalAlignment="Center" Width="Auto" />
+          <TextBox Height="23" HorizontalAlignment="Left" Margin="75,4,0,0" Name="txtNroOrden" VerticalAlignment="Top" Width="120" Focusable="True" />
+          <!--<Button Height="30" HorizontalAlignment="Left" Margin="198,0,0,0" Name="btnBuscar" VerticalAlignment="Top" Width="29" Click="btnBuscar_Click">
+            <DockPanel>
+              <Image Height="24" HorizontalAlignment="Left" Name="ImgBuscar" Stretch="Fill" VerticalAlignment="Top" Width="24" Source="/SHomiesBAR;component/Images/search.png" />
+            </DockPanel>
+          </Button>-->
+        </Grid>
+      </Border>
+      <TextBlock FontWeight="Bold" Foreground="#FF042271" Height="Auto" HorizontalAlignment="Left" Margin="263,44,0,0" Name="textBlock2" Text="Buscar Orden" VerticalAlignment="Top" Width="Auto" />
+      <Button Content="Nueva" Height="23" HorizontalAlignment="Left" Margin="514,67,0,0" Name="btnNueva" VerticalAlignment="Top" Width="75" Click="btnNueva_Click" />
+      <Button Content="Reimprimir" Height="23" HorizontalAlignment="Left" Margin="595,67,0,0" Name="btnReimprimir" VerticalAlignment="Top" Width="75" Click="btnReimprimir_Click" />
+      <Border CornerRadius="25,0,0,0" DockPanel.Dock="Top" Height="34" HorizontalAlignment="Stretch" Margin="10,2,0,577" Padding="0,4,0,0">
+        <Grid Width="783">
+          <Grid.Background>
+            <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+              <GradientStop Color="#FFFFFF" Offset="0.0" />
+              <GradientStop Color="#f0f0f0" Offset="1.0" />
+            </LinearGradientBrush>
+          </Grid.Background>
+          <Button Background="#FFC8C8C8" BorderBrush="#FF585858" Click="btnCerrar_Click" Command="{Binding CancelCommand}" Cursor="Hand" Height="25" HorizontalAlignment="Right" Margin="5,0,9,3" Name="btnCerrar" Style="{DynamicResource CloseButtonStyle}" VerticalAlignment="Center" Visibility="{Binding CancelButtonVisibility}" Width="25" />
+          <TextBlock FontFamily="Arial" FontSize="13" FontWeight="Bold" Foreground="#313438" HorizontalAlignment="Left" Margin="7,0" Text="{Binding DialogTitle}" VerticalAlignment="Center" />
+          <TextBlock FontFamily="Arial" FontSize="16" FontWeight="Bold" Foreground="#FF042271" Height="18" HorizontalAlignment="Center" Margin="38,7,56,3" Name="txbTituloDelFormulario" Text="titulo" TextAlignment="Center" VerticalAlignment="Center" Width="689" />
+        </Grid>
+      </Border>
+    </Grid>
+  </Border>
+</Window>  

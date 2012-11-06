@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F6EDCDB0-7EB5-4AC5-9F93-8C83EDC05463}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SHomies.Core</RootNamespace>
+    <AssemblyName>SHomies.Core</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstracts\AProducto.cs" />
+    <Compile Include="Almacen\Categoria.cs" />
+    <Compile Include="Almacen\Producto.cs" />
+    <Compile Include="Almacen\Unidad.cs" />
+    <Compile Include="Atributos\AperturaSistemaAttribute.cs" />
+    <Compile Include="Conexion\EntidadConexion.cs" />
+    <Compile Include="Entidades\Variables.cs" />
+    <Compile Include="Fimors\Services\ProductoService.cs" />
+    <Compile Include="Fimors\Services\Service.cs" />
+    <Compile Include="Interfaces\IPersona.cs" />
+    <Compile Include="Interfaces\IProducto.cs" />
+    <Compile Include="Operaciones\BaseOperacion\IOperacion.cs" />
+    <Compile Include="Operaciones\BaseOperacion\Operacion.cs" />
+    <Compile Include="Operaciones\Concepto.cs" />
+    <Compile Include="Operaciones\PagoFichadora.cs" />
+    <Compile Include="Operaciones\TipoConcepto.cs" />
+    <Compile Include="Operaciones\Validaciones\IValidacion.cs" />
+    <Compile Include="Operaciones\Validaciones\ValidaAperturaSistema.cs" />
+    <Compile Include="Operaciones\Validaciones\ValidaIdConcepto.cs" />
+    <Compile Include="Operaciones\Validaciones\ValidaIdFichadora.cs" />
+    <Compile Include="Operaciones\Validaciones\ValidaMontoOperacion.cs" />
+    <Compile Include="Operaciones\Validaciones\ValidaNroComprobante.cs" />
+    <Compile Include="Operaciones\Validaciones\ValidaUsuario.cs" />
+    <Compile Include="Persona\Cliente.cs" />
+    <Compile Include="Persona\Persona.cs" />
+    <Compile Include="Persona\PersonaJuridica.cs" />
+    <Compile Include="Persona\PersonaNatural.cs" />
+    <Compile Include="Persona\TipoDocumento.cs" />
+    <Compile Include="Planilla\Trabajador.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Planilla\Cargo.cs" />
+    <Compile Include="Sistema\DetalleCierre.cs" />
+    <Compile Include="Venta\DetalleOrden.cs" />
+    <Compile Include="Venta\EstadoVenta.cs" />
+    <Compile Include="Venta\Fichaje.cs" />
+    <Compile Include="Venta\mesa.cs" />
+    <Compile Include="Venta\Orden.cs" />
+    <Compile Include="Sistema\AuditoriaSistema.cs" />
+    <Compile Include="Venta\TipoComprobante.cs" />
+    <Compile Include="Venta\TipoPago.cs" />
+    <Compile Include="Sistema\Usuario.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SHomies.Conexion\SHomies.Conexion.csproj">
+      <Project>{04E1E4F6-E19D-4719-B402-0823DC3FCA6B}</Project>
+      <Name>SHomies.Conexion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SHomies.Entity\SHomies.Entity.csproj">
+      <Project>{692F3B57-5FAF-46D5-837F-925375CBF7AA}</Project>
+      <Name>SHomies.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SHomies.Utilitario\SHomies.Utilitario.csproj">
+      <Project>{C455D8E3-DFA2-47BD-A6A2-8ABDD8D7CD6E}</Project>
+      <Name>SHomies.Utilitario</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

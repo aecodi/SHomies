@@ -1,0 +1,455 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using SHomies.Utilitario;
+
+namespace SHomies.Tienda.Venta
+{
+    /// <summary>
+    /// Interaction logic for Nueva.xaml
+    /// </summary>
+    public partial class Nueva : Window
+    {
+        private Conexion.Oracle.ConexionOracle conexion;
+        private Entity.Almacen.Producto productoVender;
+        private EEstadoFormulario estadoFormulario;
+        private Core.Venta.Orden orden;
+
+        public Nueva()
+        {
+            InitializeComponent();
+        }
+
+        public Nueva(Core.Sistema.AuditoriaSistema iAuditoria, Conexion.Oracle.ConexionOracle iConexion)
+        {
+            this.conexion = iConexion;
+            this.orden = new Core.Venta.Orden(this.conexion)
+            {
+                AuditoriaSistema = iAuditoria,
+                Mozo = new Core.Sistema.Usuario(this.conexion)
+                {
+                    Id = 3
+                },
+                Mesa = new Core.Venta.Mesa(this.conexion)
+                {
+                    Id = 999
+                },
+                Cliente = new Core.Persona.Cliente(this.conexion)
+                {
+                    Id = 5
+                },
+                Estado = new Core.Venta.EstadoVenta
+                {
+                    Codigo = "P"
+                },
+                TipoPago = Core.Venta.TipoPago.EFECTIVO,
+                TipoComprobante = Core.Venta.TipoComprobante.BOLETA
+            };
+            InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.estadoFormulario = EEstadoFormulario.Load;
+            try
+            {
+                this.txbTituloDelFormulario.Text = "Nueva Orden";
+
+                List<Entity.Almacen.Categoria> listaCategorias = new Core.Almacen.Categoria(this.conexion)
+                                                                 .ListaPorEstado(true);
+
+                if (listaCategorias.Count > 0)
+                {
+                    this.dtgCategorias.ItemsSource = listaCategorias;
+                }
+                else
+                {
+                    throw new Exception("No existen categorias configuradas");
+                }
+
+                this.GetNextOrden();
+                this.cboFichadora.ItemsSource = new Core.Planilla.Trabajador(this.conexion)
+                .ListaPorCargo(new Core.Planilla.Cargo() { Id = 3 });
+
+                this.estadoFormulario = EEstadoFormulario.EndLoad;
+            }
+            catch (Exception ex)
+            {
+                this.estadoFormulario = EEstadoFormulario.ErrorLoad;
+                MessageBox.Show(ex.Message);
+            }
+            Clases.FuncionFormulario.ValidaCargaFormulario(estadoFormulario, this);
+        }
+
+        private void btnNumber_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.productoVender != null)
+                {
+                    Button Number = (Button)sender;
+
+                    this.txbCantidad.Text = this.txbCantidad.Text.ToString() == "0" ?
+                                            Number.Content.ToString() :
+                                            String.Concat(this.txbCantidad.Text, Number.Content.ToString());
+
+                    int cantidad = Convert.ToInt32(this.txbCantidad.Text);
+                    this.txbTotal.Text = Funcion.FormatoDecimal(cantidad * this.productoVender.PrecioVenta);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private void btnCleanCantidad_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button Number = (Button)sender;
+
+                this.txbCantidad.Text = "0";
+                this.txbTotal.Text = Funcion.FormatoDecimal(0);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void dtgCategorias_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (this.estadoFormulario == EEstadoFormulario.EndLoad)
+                {
+                    if (this.dtgCategorias.Items.Count > 0 && this.dtgCategorias.SelectedIndex >= 0)
+                    {
+                        if (this.dtgCategorias.SelectedCells[0].Item != null)
+                        {
+                            Entity.Almacen.Categoria categoriaSeleccionada =
+                                (Entity.Almacen.Categoria)this.dtgCategorias.SelectedCells[0].Item;
+
+                            if (categoriaSeleccionada != null)
+                            {
+                                this.dtgProductos.ItemsSource = new Core.Almacen.Producto(this.conexion)
+                                                    .ListaPorCategoria(categoriaSeleccionada);
+
+                                this.txbNameProduct.Text = string.Empty;
+                                this.txbPrecio.Text = Funcion.FormatoDecimal(0);
+                                this.txbTotal.Text = Funcion.FormatoDecimal(0);
+                                this.txbCantidad.Text = "0";
+                                this.txbComision.Text = Funcion.FormatoDecimal(0);
+                                this.grdIngresaDetalle.IsEnabled = false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void dtgProductos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (this.estadoFormulario == EEstadoFormulario.EndLoad)
+                {
+                    if (this.dtgProductos.Items.Count > 0 && this.dtgProductos.SelectedIndex >= 0)
+                    {
+                        if (this.dtgProductos.SelectedCells[0].Item != null)
+                        {
+                            productoVender =
+                                (Entity.Almacen.Producto)this.dtgProductos.SelectedCells[0].Item;
+
+                            if (productoVender != null)
+                            {
+                                this.txbNameProduct.Text = productoVender.Descripcion;
+                                this.txbPrecio.Text = Funcion.FormatoDecimal(productoVender.PrecioVenta);
+                                this.txbTotal.Text = Funcion.FormatoDecimal(0);
+                                this.txbCantidad.Text = "0";
+                                this.txbComision.Text = Funcion.FormatoDecimal(productoVender.Comision);
+                                this.grdIngresaDetalle.IsEnabled = true;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnNueva_Click(object sender, RoutedEventArgs e)
+        {
+            this.NuevaOrden();
+        }
+        private void NuevaOrden()
+        {
+            try
+            {
+                this.GetNextOrden();
+
+                this.txbNameProduct.Text = string.Empty;
+                this.txbPrecio.Text = Funcion.FormatoDecimal(0);
+                this.txbTotal.Text = Funcion.FormatoDecimal(0);
+                this.txbCantidad.Text = "0";
+                this.txbComision.Text = Funcion.FormatoDecimal(0);
+                this.orden.DetalleProducto.Clear();
+                this.orden.Fichadoras.Clear();
+
+
+                this.cboFichadora.IsEnabled = true;
+                this.btnFichadora.IsEnabled = true;
+                this.cboFichadora.SelectedIndex = -1;
+
+                this.brdProducto.IsEnabled = true;
+                this.grdIngresaDetalle.IsEnabled = false;
+                this.dtgDetalleVenta.ItemsSource = null;
+                this.dtgFichadoras.ItemsSource = null;
+                this.dtgProductos.ItemsSource = null;
+                this.dtgCategorias.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void btnAgregar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.productoVender == null || this.productoVender.Id == 0)
+                    throw new Utilitario.ExepcionSHomies("Selecciones un producto para la venta.");
+
+                Core.Venta.DetalleOrden productoAgregar = new Core.Venta.DetalleOrden(this.conexion);
+                productoAgregar.Cantidad = Funcion.ConvertTo<int>(this.txbCantidad.Text, 0);
+                productoAgregar.Total = this.productoVender.PrecioVenta * productoAgregar.Cantidad;
+                productoAgregar.Producto = new Core.Almacen.Producto(this.conexion)
+                {
+                    Id = this.productoVender.Id,
+                    Descripcion = this.productoVender.Descripcion,
+                    PrecioVenta = this.productoVender.PrecioVenta,
+                    Imagen = this.productoVender.Imagen,
+                    Comision = this.productoVender.Comision
+                };
+                productoAgregar.Orden = this.orden;
+
+                if (productoAgregar.Cantidad == 0)
+                    throw new Utilitario.ExepcionSHomies("No se ha especificado la cantidad a vender del producto.");
+
+                Core.Venta.DetalleOrden producto = this.orden.DetalleProducto.Find(x => x.Producto.Id == productoAgregar.Producto.Id);
+                if (producto != null)
+                    this.orden.DetalleProducto.Remove(producto);
+
+                this.orden.DetalleProducto.Add(productoAgregar);
+
+                List<Clases.DetalleOrdenViewModel> detalle =
+                    new List<Clases.DetalleOrdenViewModel>();
+
+                foreach (Core.Venta.DetalleOrden item in this.orden.DetalleProducto)
+                {
+                    detalle.Add(
+                        new Clases.DetalleOrdenViewModel(this.conexion)
+                        {
+                            DescripcionProducto = item.Producto.Descripcion,
+                            PrecioProducto = Funcion.FormatoDecimal(item.Producto.PrecioVenta),
+                            Cantidad = item.Cantidad,
+                            Imagen = item.Producto.Imagen
+                        }
+                        );
+                }
+
+                this.dtgDetalleVenta.ItemsSource = detalle.OrderBy(x => x.DescripcionProducto);
+                this.txbTotalVenta.Text = Funcion.FormatoDecimal(this.orden.DetalleProducto.Sum(x => x.Total));
+                this.tabDetalleVenta.SelectedIndex = 0;
+                this.DistribulleComision();
+            }
+            catch (Utilitario.ExepcionSHomies sx)
+            {
+                MessageBox.Show(sx.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void GetNextOrden()
+        {
+            this.orden.GetNumeroOrden();
+            this.txbNroOrden.Text = this.orden.Id.ToString();
+        }
+
+        private void btnGrabar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                new Core.Operaciones.Validaciones.ValidaAperturaSistema(new Core.Sistema.AuditoriaSistema(this.conexion)).Ejecutar();
+
+                if (this.orden.Id == 0)
+                    throw new Utilitario.ExepcionSHomies("Número de la orden no valido.");
+
+                if (this.orden.DetalleProducto.Count == 0)
+                    throw new Utilitario.ExepcionSHomies("No se ha ingresado detalle de la orden.");
+
+                this.orden.Conexion.BeginTransaction();
+
+                this.orden.Registrar();
+                this.orden.RegistraDetalle();
+                this.orden.RegistraFichaje();
+
+                MessageBox.Show("Orden guardada, se procedera a imprimir ...");
+
+                this.ImprimirBoleto();
+
+                this.grdIngresaDetalle.IsEnabled = false;
+                this.cboFichadora.IsEnabled = false;
+                this.btnFichadora.IsEnabled = false;
+                this.brdProducto.IsEnabled = false;
+
+                this.orden.Conexion.Commit();
+            }
+            catch (Utilitario.ExepcionSHomies sx)
+            {
+                MessageBox.Show(sx.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                this.orden.Conexion.RoolBack();
+            }
+        }
+
+        private void ImprimirBoleto()
+        {
+            Ticket ticket = new Ticket();
+            ticket.Title = "EL RELAX";
+            ticket.AddCabecera("TICKET", Alineacion.Left, Alineacion.Left, 10, this.orden.Id);
+            ticket.AddCabecera("CAJERO", Alineacion.Left, Alineacion.Left, 10, this.orden.AuditoriaSistema.Usuario.UserName);
+            ticket.AddCabecera("FECHA", Alineacion.Left, Alineacion.Left, 10, DateTime.Now);
+            ticket.AddCebeceraDetalle("Cant.", Alineacion.Left, Alineacion.Left, 6);
+            ticket.AddCebeceraDetalle("Descripción", Alineacion.Left, Alineacion.Left, 20);
+            ticket.AddCebeceraDetalle("Importe", Alineacion.Right, Alineacion.Right, 9);
+
+            foreach (Core.Venta.DetalleOrden detalle in this.orden.DetalleProducto)
+            {
+                ticket.AddItemsDetails(detalle.Cantidad, detalle.Producto.Descripcion, Funcion.FormatoDecimal(detalle.Total));
+            }
+            ticket.AddTotal("Total Venta", Alineacion.Right, Alineacion.Right, 25, Funcion.FormatoDecimal(this.orden.DetalleProducto.Sum(o => o.Total)));
+
+            foreach (Core.Venta.Fichaje fichaje in this.orden.Fichadoras)
+            {
+                ticket.AddTotal(fichaje.Fichadora.Nombres, Alineacion.Right, Alineacion.Right, 25, Funcion.FormatoDecimal(fichaje.Monto));
+            }
+            ticket.itemsPie.Add("Los esperamos");
+            String impresora = System.Configuration.ConfigurationSettings.AppSettings["Impresora"].ToString();
+
+            ticket.Imprimir(impresora);
+        }
+
+        private void btnFichadora_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Core.Venta.Fichaje fichaje =
+                    new Core.Venta.Fichaje(this.conexion);
+
+
+                fichaje.Fichadora.Id = Funcion.ConvertTo<int>(this.cboFichadora.SelectedValue, 0);
+
+                if (this.orden.DetalleProducto.Count <= 0)
+                    throw new Utilitario.ExepcionSHomies("No se ha ingresado detalle de la orden.");
+                if (fichaje.Fichadora.Id == 0)
+                    throw new Utilitario.ExepcionSHomies("Seleccione fichadora.");
+                if (this.orden.Fichadoras.Find(x => x.Fichadora.Id == fichaje.Fichadora.Id) != null)
+                    throw new Utilitario.ExepcionSHomies("Fichadora ya registrada en la orden.");
+
+                fichaje.Fichadora.Nombres = ((Core.Planilla.Trabajador)this.cboFichadora.SelectedItem).Nombres;
+
+                fichaje.Orden = this.orden;
+                this.orden.Fichadoras.Add(fichaje);
+
+                this.DistribulleComision();
+            }
+            catch (Utilitario.ExepcionSHomies sx)
+            {
+                MessageBox.Show(sx.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void DistribulleComision()
+        {
+            try
+            {
+                decimal totalComision = this.orden.DetalleProducto.Sum(x => x.Producto.Comision);
+                decimal montoFichaje = totalComision / (this.orden.Fichadoras.Count == 0 ? 1 : this.orden.Fichadoras.Count);
+
+                List<Clases.DetalleFichajeViewModel> detalle =
+                    new List<Clases.DetalleFichajeViewModel>();
+
+                foreach (Core.Venta.Fichaje item in this.orden.Fichadoras)
+                {
+                    item.Monto = montoFichaje;
+                    detalle.Add(
+                        new Clases.DetalleFichajeViewModel(this.conexion)
+                        {
+                            NombreFichadora = item.Fichadora.Nombres,
+                            MontoFichaje = Funcion.FormatoDecimal(item.Monto)
+                        }
+                        );
+                }
+
+                this.dtgFichadoras.ItemsSource = detalle.OrderBy(x => x.NombreFichadora);
+                this.txbTotalComision.Text = Funcion.FormatoDecimal(totalComision);
+
+                this.cboFichadora.SelectedValue = this.cboFichadora.SelectedValue;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void btnReimprimir_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.ImprimirBoleto();
+            }
+            catch (Utilitario.ExepcionSHomies sx)
+            {
+                MessageBox.Show(sx.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnCerrar_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+    }
+}

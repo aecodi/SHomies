@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<configuration>
+<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/></startup>
+  <appSettings>
+    <!--<add key="Impresora" value="\\oppdev14.sysone-sfc.corp\hp LaserJet 1320 PCL 6"/>-->
+    <add key="SizeLetraBoleta" value="8"/>
+    <!--<add key="Impresora" value="Microsoft XPS Document Writer"/>-->
+    <add key="Impresora" value="SnagIt 8"/>
+    <add key="SizeEtiquetaSubCabeceraTicket" value="10"/>
+  </appSettings>
+</configuration>

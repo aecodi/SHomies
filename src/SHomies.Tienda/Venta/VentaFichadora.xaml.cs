@@ -1,0 +1,210 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using SHomies.Utilitario;
+
+namespace SHomies.Tienda.Venta
+{
+    /// <summary>
+    /// Interaction logic for VentaFichadora.xaml
+    /// </summary>
+    public partial class VentaFichadora : Window
+    {
+        private EEstadoFormulario estadoFormulario;
+        private Conexion.IConexion conexion;
+        private Core.Sistema.AuditoriaSistema auditoria;
+        private Core.Venta.Fichaje fichaje;
+
+        public VentaFichadora()
+        {
+            InitializeComponent();
+        }
+
+        public VentaFichadora(Core.Sistema.AuditoriaSistema iAuditoria, Conexion.IConexion iConexion)
+        {
+            this.conexion = iConexion;
+            this.auditoria = iAuditoria;
+
+            InitializeComponent();
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            estadoFormulario = EEstadoFormulario.Load;
+            try
+            {
+                this.txbTituloDelFormulario.Text = "Pago Fichadora";
+
+                this.fichaje = new Core.Venta.Fichaje(this.conexion);
+
+                this.cboFichadora.ItemsSource = new Core.Planilla.Trabajador(this.conexion)
+                .ListaPorCargo(new Core.Planilla.Cargo() { Id = 3 });
+
+                this.dtpFechaInicial.Text = this.auditoria.FechaSistema.ToShortDateString();
+                this.dtpFechaFinal.Text = this.auditoria.FechaSistema.ToShortDateString();
+
+                estadoFormulario = EEstadoFormulario.EndLoad;
+            }
+            catch (Utilitario.ExepcionSHomies es)
+            {
+                this.estadoFormulario = EEstadoFormulario.ErrorLoad;
+                MessageBox.Show(es.Message);
+            }
+            catch (Exception ex)
+            {
+                this.estadoFormulario = EEstadoFormulario.ErrorLoad;
+                MessageBox.Show(ex.Message);
+            }
+
+            Clases.FuncionFormulario.ValidaCargaFormulario(estadoFormulario, this);
+        }
+        private void btnCerrar_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnVer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.fichaje = new Core.Venta.Fichaje(this.conexion);
+                this.txbFichadora.Text = string.Empty;
+                this.txbTotalFichaje.Text = Funcion.FormatoDecimal(0);
+                this.dtgFichaje.ItemsSource = null;
+                this.btnImprimir.IsEnabled = false;
+
+                this.fichaje.Fichadora = new Core.Planilla.Trabajador()
+                {
+                    Id = Funcion.ConvertTo<int>(this.cboFichadora.SelectedValue, 0)
+                };
+                
+                this.dtgFichaje.ItemsSource =
+                new Clases.DetalleFichajeViewModel(this.conexion).GetFichaje(
+                    this.fichaje.Fichadora,
+                    Funcion.ConvertTo<DateTime>(this.dtpFechaInicial.Text, new DateTime(1, 1, 1)),
+                    Funcion.ConvertTo<DateTime>(this.dtpFechaFinal.Text, new DateTime(1, 1, 1)));
+
+                if (this.dtgFichaje.Items.Count == 0)
+                    Funcion.EjecutaExepcionShomies("No existen datos registrados para esta fecha.");
+
+                this.txbTotalFichaje.Text = Funcion.FormatoDecimal(((List<Clases.DetalleFichajeViewModel>)this.dtgFichaje.ItemsSource).Sum(x => x.Monto));
+                this.txbFichadora.Text = this.cboFichadora.Text;
+
+                bool estaPagado = ((Clases.DetalleFichajeViewModel)this.dtgFichaje.Items[0]).Estado == 1;
+                this.btnPagar.IsEnabled = estaPagado;
+                this.btnImprimir.IsEnabled = !estaPagado;
+                this.chkPagado.IsChecked = !estaPagado;
+            }
+            catch (Utilitario.ExepcionSHomies es)
+            {
+                MessageBox.Show(es.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Imprimir()
+        {
+            Ticket ticket = new Ticket();
+            ticket.Title = "EL RELAX-PAGO FICHADORA";
+            ticket.AddCabecera("FICHADORA", Alineacion.Left, Alineacion.Left, 10, "ZULY");
+            ticket.AddCabecera("CAJERO", Alineacion.Left, Alineacion.Left, 10, this.auditoria.Usuario.UserName);
+            ticket.AddCabecera("FECHA PAGO", Alineacion.Left, Alineacion.Left, 10, this.auditoria.FechaSistema.ToShortDateString());
+            ticket.AddCebeceraDetalle("Orden", Alineacion.Left, Alineacion.Left, 6);
+            ticket.AddCebeceraDetalle("Fecha Venta", Alineacion.Left, Alineacion.Left, 20);
+            ticket.AddCebeceraDetalle("Monto", Alineacion.Right, Alineacion.Right, 9);
+
+            foreach (Clases.DetalleFichajeViewModel detalle in (List<Clases.DetalleFichajeViewModel>)this.dtgFichaje.ItemsSource)
+            {
+                ticket.AddItemsDetails(detalle.Orden.Id, detalle.FechaProceso.ToShortDateString(), Funcion.FormatoDecimal(detalle.Monto));
+            }
+            ticket.AddTotal("Total Fichaje", Alineacion.Right, Alineacion.Right, 25, Funcion.FormatoDecimal(Funcion.ConvertTo<decimal>(this.txbTotalFichaje.Text)));
+
+            ticket.itemsPie.Add("Los esperamos");
+            String impresora = System.Configuration.ConfigurationSettings.AppSettings["Impresora"].ToString();
+
+            ticket.Imprimir(impresora);
+        }
+
+        private void btnImprimir_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.Imprimir();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void btnPagar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Core.Operaciones.PagoFichadora pagoFichadora =
+                    new Core.Operaciones.PagoFichadora(this.conexion)
+                    {
+                        Fichadora = new Core.Persona.PersonaNatural
+                        {
+                            Id = this.fichaje.Fichadora.Id
+                        },
+                        Monto = Funcion.ConvertTo<decimal>(this.txbTotalFichaje.Text),
+                        Auditoria = this.auditoria
+                    };
+
+                pagoFichadora.Procesar();
+
+                this.btnImprimir.IsEnabled = true;
+                this.btnPagar.IsEnabled = false;
+                this.Imprimir();
+            }
+            catch (Utilitario.ExepcionSHomies es)
+            {
+                MessageBox.Show(es.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void VerDatos_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int indice = Funcion.ConvertTo<int>(this.dtgFichaje.SelectedIndex, -1);
+                if (indice < 0)
+                    Funcion.EjecutaExepcionShomies("Seleccione una fila para ver orden.");
+
+                Clases.DetalleFichajeViewModel fichaje = (Clases.DetalleFichajeViewModel)this.dtgFichaje.Items[indice];
+
+                Core.Venta.Orden orden = new Core.Venta.Orden(this.conexion)
+                {
+                    Id = fichaje.Orden.Id
+                };
+
+                DatosOrden datosOrden = new DatosOrden(orden, this.conexion);
+                datosOrden.ShowDialog();
+            }
+            catch (Utilitario.ExepcionSHomies es)
+            {
+                MessageBox.Show(es.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+    }
+}

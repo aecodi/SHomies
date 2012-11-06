@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6C0723BF-C8CE-487C-8EFA-457A2A053B9F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SHomies.Tienda</RootNamespace>
+    <AssemblyName>SHomies.Tienda</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>tienda.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="ReuxablesLegacy">
+      <HintPath>..\packages\Themes\ReuxablesLegacy.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xaml">
+      <HintPath>C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Profile\Client\System.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Clases\ConvierteImagen.cs" />
+    <Compile Include="Clases\ConvierteEstado.cs" />
+    <Compile Include="Clases\ConvierteFormatoDecimal.cs" />
+    <Compile Include="Clases\ConvierteFormatoFecha.cs" />
+    <Compile Include="Clases\DetalleCierreViewModel.cs" />
+    <Compile Include="Clases\DetalleFichajeViewModel.cs" />
+    <Compile Include="Clases\DetalleOrdenViewModel.cs" />
+    <Compile Include="Clases\FuncionFormulario.cs" />
+    <Compile Include="Clases\ObtieneImagen.cs" />
+    <Compile Include="Clases\ProductoViewModel.cs" />
+    <Compile Include="Inventario\AdministraProducto.xaml.cs">
+      <DependentUpon>AdministraProducto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Prueba.xaml.cs">
+      <DependentUpon>Prueba.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Cabecera.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cabecera.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\datos\cabecera.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>cabecera.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\datos\ventasdiarias.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ventasdiarias.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\ReporteVentasDelDia.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReporteVentasDelDia.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Service\Nueva.xaml.cs">
+      <DependentUpon>Nueva.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sistema\Aperturar.xaml.cs">
+      <DependentUpon>Aperturar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sistema\Cerrar.xaml.cs">
+      <DependentUpon>Cerrar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Usuario\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VentaFichadora.cs" />
+    <Compile Include="Venta\DatosOrden.xaml.cs">
+      <DependentUpon>DatosOrden.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Venta\Nueva.xaml.cs">
+      <DependentUpon>Nueva.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Venta\VentaFichadora.xaml.cs">
+      <DependentUpon>VentaFichadora.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Inventario\AdministraCategoria.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Inventario\AdministraProducto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Inventario\AdministraCategoria.xaml.cs">
+      <DependentUpon>AdministraCategoria.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Prueba.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Service\Nueva.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sistema\Aperturar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Sistema\Cerrar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Usuario\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Venta\DatosOrden.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Venta\Nueva.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Venta\VentaFichadora.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Cabecera.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Cabecera.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\ReporteVentasDelDia.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ReporteVentasDelDia.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Reportes\datos\cabecera.xsc">
+      <DependentUpon>cabecera.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\datos\cabecera.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>cabecera.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reportes\datos\cabecera.xss">
+      <DependentUpon>cabecera.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\datos\ventasdiarias.xsc">
+      <DependentUpon>ventasdiarias.xsd</DependentUpon>
+    </None>
+    <None Include="Reportes\datos\ventasdiarias.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ventasdiarias.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reportes\datos\ventasdiarias.xss">
+      <DependentUpon>ventasdiarias.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SHomies.Conexion\SHomies.Conexion.csproj">
+      <Project>{04E1E4F6-E19D-4719-B402-0823DC3FCA6B}</Project>
+      <Name>SHomies.Conexion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SHomies.Core\SHomies.Core.csproj">
+      <Project>{F6EDCDB0-7EB5-4AC5-9F93-8C83EDC05463}</Project>
+      <Name>SHomies.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SHomies.Entity\SHomies.Entity.csproj">
+      <Project>{692F3B57-5FAF-46D5-837F-925375CBF7AA}</Project>
+      <Name>SHomies.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SHomies.Utilitario\SHomies.Utilitario.csproj">
+      <Project>{C455D8E3-DFA2-47BD-A6A2-8ABDD8D7CD6E}</Project>
+      <Name>SHomies.Utilitario</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\activo.png" />
+    <Resource Include="Images\inactivo.png" />
+    <Resource Include="Images\bloqueado.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\detalle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="tienda.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\login.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
