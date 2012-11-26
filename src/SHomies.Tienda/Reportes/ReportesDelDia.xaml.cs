@@ -74,44 +74,56 @@ namespace SHomies.Tienda.Reportes
                 DataRow dataCabecera = cabecera.NewRow();
                 Core.Reportes.Reporte datos = new Core.Reportes.Reporte(this.conexion);
                 DateTime fechaInicio = Funcion.ConvertTo<DateTime>(this.dtpInicio.Text, new DateTime(1, 1, 1));
-                DateTime fechaFin = Funcion.ConvertTo<DateTime>(this.dtpFin.Text, new DateTime(1, 1, 1));
+                DateTime fechaFin = Funcion.ConvertTo<DateTime>(this.dtpFin.Text, fechaInicio);
 
                 if (fechaInicio.ToShortDateString() == new DateTime(1, 1, 1).ToShortDateString())
                     Funcion.EjecutaExepcionShomies(string.Concat("Ingrese fecha inicio del reporte"));
-                
+                if (fechaFin.ToShortDateString() == new DateTime(1, 1, 1).ToShortDateString())
+                    Funcion.EjecutaExepcionShomies("Ingrese fecha fin del reporte");
+
                 switch (this.tipoReporte)
                 {
                     case EOpcionReporteDiario.REPORTE_CIERRE:
                         data = datos.ReporteDelCierre(fechaInicio);
+                        SHomies.UI.Ventas.Reportes.CierreDiario cierre =
+                            new UI.Ventas.Reportes.CierreDiario();
+                        cierre.detalleCierre = Funcion.ConvertToList<SHomies.UI.Ventas.Model.CierreDiario>(data.Tables[0]);
+                        cierre.ShowDialog();
                         data.Tables[0].TableName = "DetalleCierre";
                         Funcion.SetValueToRow(dataCabecera, "Titulo", "REPORTE DEL CIERRE DIARIO");
-                        reporte = new ReporteCierreDiario();
+                        //reporte = new ReporteCierreDiario();
+                        reporte = null;
                         break;
                     case EOpcionReporteDiario.REPORTE_VENTA:
                         data = datos.ReporteVentaProductosPorDia(fechaInicio);
+                        SHomies.UI.Ventas.Reportes.VentaDiaria ventas =
+                            new UI.Ventas.Reportes.VentaDiaria();
+                        ventas.listaVentaDiaria = Funcion.ConvertToList<SHomies.UI.Ventas.Model.VentaDiaria>(data.Tables[0]);
+                        ventas.ShowDialog();
+
                         data.Tables[0].TableName = "VentasDiarias";
                         Funcion.SetValueToRow(dataCabecera, "Titulo", "REPORTE VENTAS DEL DIA");
-                        reporte = new ReporteVentasDelDia();
+                        //reporte = new ReporteVentasDelDia();
+                        reporte = null;
                         break;
                     case EOpcionReporteDiario.REPORTE_PAGO_FICHADORA:
-                        if (fechaFin.ToShortDateString() == new DateTime(1, 1, 1).ToShortDateString())
-                            Funcion.EjecutaExepcionShomies("Ingrese fecha fin del reporte");
-                        data = datos.ReportePagoFichadoraEntreFechas(fechaInicio, fechaFin);
+                        data = datos.ReportePagoFichadorasEntreFechas(fechaInicio, fechaInicio);
+                        SHomies.UI.Ventas.Reportes.VentaFichadoras fichaje = new UI.Ventas.Reportes.VentaFichadoras();
+                        fichaje.ventasFichadoras = Funcion.ConvertToList<SHomies.UI.Ventas.Model.VentaFichadoras>(data.Tables[0]);
+                        fichaje.ShowDialog();
+
                         data.Tables[0].TableName = "Fichaje";
                         Funcion.SetValueToRow(dataCabecera, "Titulo", "REPORTE PAGO FICHADORA");
-                        reporte = new ReporteFichajePorFecha();
+                        //reporte = new ReporteFichajePorFecha();
+                        reporte = null;
                         break;
                     case EOpcionReporteDiario.REPORTE_FICHAJE:
-                        if (fechaFin.ToShortDateString() == new DateTime(1, 1, 1).ToShortDateString())
-                            Funcion.EjecutaExepcionShomies("Ingrese fecha fin del reporte");
                         data = datos.ReportePagoFichadoraEntreFechas(fechaInicio, fechaFin);
                         data.Tables[0].TableName = "Fichaje";
                         Funcion.SetValueToRow(dataCabecera, "Titulo", "REPORTE PAGO FICHADORA");
                         reporte = new ReporteFichajePorFecha();
                         break;
                     case EOpcionReporteDiario.REPORTE_POR_FICHADORA:
-                        if (fechaFin.ToShortDateString() == new DateTime(1, 1, 1).ToShortDateString())
-                            Funcion.EjecutaExepcionShomies("Ingrese fecha fin del reporte");
                         int idFichadora = Funcion.ConvertTo<int>(this.cboFichadora.SelectedValue, 0);
                         if (idFichadora == 0)
                             Funcion.EjecutaExepcionShomies("Selecciones fichadora");
@@ -125,13 +137,15 @@ namespace SHomies.Tienda.Reportes
                         Funcion.EjecutaExepcionShomies("No se ha seleccionado una opción.");
                         break;
                 }
-                cabecera.Rows.Add(dataCabecera);
-                data.Tables.Add(cabecera);
-                reporte.SetDataSource(data);
-                ViewReport formulario = new ViewReport(reporte);
-                formulario.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-                formulario.ShowDialog();
-
+                if (reporte != null)
+                {
+                    cabecera.Rows.Add(dataCabecera);
+                    data.Tables.Add(cabecera);
+                    reporte.SetDataSource(data);
+                    ViewReport formulario = new ViewReport(reporte);
+                    formulario.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+                    formulario.ShowDialog();
+                }
             }
             catch (Utilitario.ExepcionSHomies es)
             {
@@ -178,6 +192,11 @@ namespace SHomies.Tienda.Reportes
             tipoReporte = iEstadoReporte;
             this.cboFichadora.IsEnabled = estado;
             this.dtpFin.IsEnabled = estado;
+        }
+
+        private void rbtPagoTotalFichadora_Checked(object sender, RoutedEventArgs e)
+        {
+            this.habilitaFiltros(EOpcionReporteDiario.REPORTE_PAGO_FICHADORA, false);
         }
 
 

@@ -48,7 +48,6 @@
     <Compile Include="Oracle\ConexionOracle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AConexion.cs" />
-    <Compile Include="SQL\ConexionSQL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SHomies.Utilitario\SHomies.Utilitario.csproj">

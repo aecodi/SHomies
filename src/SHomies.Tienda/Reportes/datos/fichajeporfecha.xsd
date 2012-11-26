@@ -25,6 +25,7 @@
               <xs:element name="comision" msprop:Generator_ColumnVarNameInTable="columncomision" msprop:Generator_ColumnPropNameInRow="comision" msprop:Generator_ColumnPropNameInTable="comisionColumn" msprop:Generator_UserColumnName="comision" type="xs:decimal" minOccurs="0" />
               <xs:element name="totalComision" msprop:Generator_ColumnVarNameInTable="columntotalComision" msprop:Generator_ColumnPropNameInRow="totalComision" msprop:Generator_ColumnPropNameInTable="totalComisionColumn" msprop:Generator_UserColumnName="totalComision" type="xs:decimal" minOccurs="0" />
               <xs:element name="fechaproceso" msprop:Generator_ColumnVarNameInTable="columnfechaproceso" msprop:Generator_ColumnPropNameInRow="fechaproceso" msprop:Generator_ColumnPropNameInTable="fechaprocesoColumn" msprop:Generator_UserColumnName="fechaproceso" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="totalFichaje" msprop:Generator_ColumnVarNameInTable="columntotalFichaje" msprop:Generator_ColumnPropNameInRow="totalFichaje" msprop:Generator_ColumnPropNameInTable="totalFichajeColumn" msprop:Generator_UserColumnName="totalFichaje" type="xs:decimal" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

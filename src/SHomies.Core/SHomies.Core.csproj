@@ -54,6 +54,7 @@
     <Compile Include="Operaciones\BaseOperacion\IOperacion.cs" />
     <Compile Include="Operaciones\BaseOperacion\Operacion.cs" />
     <Compile Include="Operaciones\Concepto.cs" />
+    <Compile Include="Operaciones\Multa.cs" />
     <Compile Include="Operaciones\PagoFichadora.cs" />
     <Compile Include="Operaciones\TipoConcepto.cs" />
     <Compile Include="Operaciones\Validaciones\IValidacion.cs" />

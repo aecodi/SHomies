@@ -86,6 +86,12 @@
     <Compile Include="Inventario\AdministraProducto.xaml.cs">
       <DependentUpon>AdministraProducto.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Mantenimiento\AdministraFichadora.xaml.cs">
+      <DependentUpon>AdministraFichadora.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CierreDiario.cs" />
+    <Compile Include="Model\VentaDiaria.cs" />
+    <Compile Include="Model\VentaFichadoras.cs" />
     <Compile Include="Prueba.xaml.cs">
       <DependentUpon>Prueba.xaml</DependentUpon>
     </Compile>
@@ -94,6 +100,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Cabecera.rpt</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CierreDiario.xaml.cs">
+      <DependentUpon>CierreDiario.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reportes\datos\cabecera.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -141,6 +150,12 @@
       <DependentUpon>ReporteVentasDelDia.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reportes\VentaDiaria.xaml.cs">
+      <DependentUpon>VentaDiaria.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\VentaFichadoras.xaml.cs">
+      <DependentUpon>VentaFichadoras.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reportes\VeReporte.xaml.cs">
       <DependentUpon>VeReporte.xaml</DependentUpon>
     </Compile>
@@ -165,6 +180,9 @@
     <Compile Include="VentaFichadora.cs" />
     <Compile Include="Venta\DatosOrden.xaml.cs">
       <DependentUpon>DatosOrden.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Venta\Multa.xaml.cs">
+      <DependentUpon>Multa.xaml</DependentUpon>
     </Compile>
     <Compile Include="Venta\Nueva.xaml.cs">
       <DependentUpon>Nueva.xaml</DependentUpon>
@@ -199,13 +217,29 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Mantenimiento\AdministraFichadora.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Prueba.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Reportes\CierreDiario.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Reportes\ReportesDelDia.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reportes\VentaDiaria.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Reportes\VentaFichadoras.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Reportes\VeReporte.xaml">
       <SubType>Designer</SubType>
@@ -227,6 +261,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\datagrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -239,11 +277,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\Windows.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Usuario\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Venta\DatosOrden.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Venta\Multa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -400,6 +446,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Buttons\allfichadoras.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\lock.png" />
+    <Resource Include="Images\unlock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\loading.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

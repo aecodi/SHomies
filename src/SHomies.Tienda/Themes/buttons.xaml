@@ -17,6 +17,22 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+    <ControlTemplate x:Key="StyleButtonEliminar" TargetType="Button">
+        <Grid>
+            <Image Height="24" HorizontalAlignment="Center" Stretch="Fill" VerticalAlignment="Top" Width="24" Source="../Images/Buttons/limpiar.png" Margin="0" />
+            <TextBlock Height="23" Margin="0,23,1,0" Text="Eliminar" FontFamily="Calibri"  FontSize="12" FontWeight="Bold" VerticalAlignment="Top" Foreground="#FF5F5F5F" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="#FF4788c8" />
+                <Setter Property="Foreground" Value="#FF4788c8" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="#FF8C2F2F" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
     <ControlTemplate x:Key="StyleButtonImprimir" TargetType="Button">
         <Grid>
             <Image Height="24" HorizontalAlignment="Left" Stretch="Fill" VerticalAlignment="Top" Width="24" Source="../Images/Buttons/imprimir.png" Margin="9,0,0,0" />
@@ -131,5 +147,18 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    
+
+    <ControlTemplate x:Key="StyleButtonEditar" TargetType="Button">
+        <Grid>
+            <Image Height="24" HorizontalAlignment="Left" Stretch="Fill" VerticalAlignment="Top" Width="24" Source="../Images/Buttons/pagar.png" Margin="3,0,0,0" />
+            <TextBlock Height="23" Margin="0,23,1,0" Text="Editar" FontFamily="Calibri"  FontSize="12" FontWeight="Bold" VerticalAlignment="Top" Foreground="#FF5F5F5F" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="#FF4788c8" />
+                <Setter Property="Foreground" Value="#FF4788c8" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 </ResourceDictionary>

@@ -9,6 +9,8 @@ namespace SHomies.Utilitario
     {
         Load = 0,
         EndLoad = 1,
-        ErrorLoad = 2
+        ErrorLoad = 2,
+        Nuevo=3,
+        Modificar=4
     }
 }

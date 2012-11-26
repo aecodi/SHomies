@@ -8,51 +8,57 @@
         WindowStyle="None" 
         AllowsTransparency="True" 
         Background="{x:Null}" Icon="/SHomies.Tienda;component/tienda.ico" Loaded="Window_Loaded">
-  <Border BorderBrush="Silver" Background="White" BorderThickness="1" Height="239" HorizontalAlignment="Left" Name="border4" VerticalAlignment="Top" Width="486" CornerRadius="25,0,0,0" >
-    <Grid Width="470" Height="233">
-      <Border BorderBrush="Silver" BorderThickness="1" Height="187" HorizontalAlignment="Left" Margin="6,0,0,6" Name="brdProducto" VerticalAlignment="Bottom" Width="458" CornerRadius="10,0,0,0">
-        <Grid Height="179" Name="grid2" Width="450">
-          <Border BorderBrush="Black" BorderThickness="1.5,0,1.5,0" CornerRadius="0,20,0,20" Height="167" HorizontalAlignment="Left" Margin="6,6,0,0" Name="border3" VerticalAlignment="Top" Width="436">
-            <Grid Height="165" Name="grid3" Width="425">
-              <GroupBox Header="Orden" Height="94" HorizontalAlignment="Left" Margin="6,6,0,0" Name="groupBox1" VerticalAlignment="Top" Width="128" FontWeight="Bold" Foreground="#FFA74B4B">
-                <Grid>
-                  <Button Content="Nueva Orden" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="btnNuevaOrden" VerticalAlignment="Top" Width="104" Click="btnNuevaOrden_Click" FontWeight="Normal" Background="White" BorderBrush="Silver" ClickMode="Press" />
-                  <Button Content="Venta Fichadora" Height="23" HorizontalAlignment="Left" Margin="6,35,0,0" Name="btnVentaFichadora" VerticalAlignment="Top" Width="104" Click="btnVentaFichadora_Click" FontWeight="Normal" />
+    <Border BorderBrush="Silver" Background="White" BorderThickness="1" Height="239" HorizontalAlignment="Left" Name="border4" VerticalAlignment="Top" Width="486" CornerRadius="25,0,0,0" >
+        <Grid Width="470" Height="233">
+            <Border BorderBrush="Silver" BorderThickness="1" Height="187" HorizontalAlignment="Left" Margin="6,0,0,6" Name="brdProducto" VerticalAlignment="Bottom" Width="458" CornerRadius="10,0,0,0">
+                <Grid Height="179" Name="grid2" Width="450">
+                    <Border BorderBrush="Black" BorderThickness="1.5,0,1.5,0" CornerRadius="0,20,0,20" Height="167" HorizontalAlignment="Left" Margin="6,6,0,0" Name="border3" VerticalAlignment="Top" Width="436">
+                        <Grid Height="165" Name="grid3" Width="425">
+                            <GroupBox Header="Orden" Height="155" HorizontalAlignment="Left" Margin="6,6,0,0" Name="groupBox1" VerticalAlignment="Top" Width="128" FontWeight="Bold" Foreground="#FFA74B4B">
+                                <Grid Height="132" Width="115">
+                                    <Button Content="Nueva Orden" Height="23" HorizontalAlignment="Left" Margin="6,12,0,0" Name="btnNuevaOrden" VerticalAlignment="Top" Width="104" Click="btnNuevaOrden_Click" FontWeight="Normal" Background="White" BorderBrush="Silver" ClickMode="Press" />
+                                    <Button Content="Venta Fichadora" Height="23" HorizontalAlignment="Left" Margin="6,52,0,0" Name="btnVentaFichadora" VerticalAlignment="Top" Width="104" Click="btnVentaFichadora_Click" FontWeight="Normal" />
+                                    <Button Content="Multas" FontWeight="Normal" Height="23" HorizontalAlignment="Left" Margin="5,92,0,0" Name="btnMultas" VerticalAlignment="Top" Width="104" Click="btnMultas_Click" />
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox FontWeight="Bold" Foreground="#FFA74B4B" Header="Inventario" Height="94" HorizontalAlignment="Left" Margin="276,6,0,0" Name="groupBox3" VerticalAlignment="Top" Width="128">
+                                <Grid>
+                                    <Button Content="Producto" Height="23" HorizontalAlignment="Left" Margin="8,35,0,0" Name="btnNuevoProducto" VerticalAlignment="Top" Width="79" Click="btnNuevoProducto_Click" FontWeight="Normal" />
+                                    <Button Content="Categoria" Height="23" HorizontalAlignment="Left" Margin="8,6,0,0" Name="btnCategoria" VerticalAlignment="Top" Width="79" Click="btnCategoria_Click" FontWeight="Normal" />
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox FontWeight="Bold" Foreground="#FFA74B4B" Header="Reportes" Height="58" HorizontalAlignment="Left" Margin="142,103,0,0" Name="groupBox4" VerticalAlignment="Top" Width="128">
+                                <Grid>
+                                    <Button Content="Reportes" Height="23" HorizontalAlignment="Left" Margin="19,6,0,0" Name="btnReporte" VerticalAlignment="Top" Width="75" Click="btnReporte_Click" FontWeight="Normal" />
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox FontWeight="Bold" Foreground="#FFA74B4B" Header="Mantenimiento" Height="57" HorizontalAlignment="Left" Margin="275,104,0,0" Name="groupBox5" VerticalAlignment="Top" Width="128">
+                                <Grid>
+                                    <Button Background="White" BorderBrush="Silver" ClickMode="Press" Content="Fichadora" FontWeight="Normal" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="btnFichadora" VerticalAlignment="Top" Width="104" Click="btnFichadora_Click" />
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
+                    </Border>
+                    <GroupBox FontWeight="Bold" Foreground="#FFA74B4B" Header="Sistema" Height="94" HorizontalAlignment="Left" Margin="152,13,0,0" Name="groupBox2" VerticalAlignment="Top" Width="128">
+                        <Grid>
+                            <Button Content="Apertura Sistema" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="btnApertura" VerticalAlignment="Top" Width="104" Click="btnApertura_Click" FontWeight="Normal" />
+                            <Button Content="Cerrar Sistema" Height="23" HorizontalAlignment="Left" Margin="6,35,0,0" Name="btnCierraSistema" VerticalAlignment="Top" Width="104" Click="btnCierraSistema_Click" FontWeight="Normal" />
+                        </Grid>
+                    </GroupBox>
                 </Grid>
-              </GroupBox>
-              <GroupBox FontWeight="Bold" Foreground="#FFA74B4B" Header="Inventario" Height="94" HorizontalAlignment="Left" Margin="276,6,0,0" Name="groupBox3" VerticalAlignment="Top" Width="128">
-                <Grid>
-                  <Button Content="Producto" Height="23" HorizontalAlignment="Left" Margin="8,35,0,0" Name="btnNuevoProducto" VerticalAlignment="Top" Width="79" Click="btnNuevoProducto_Click" FontWeight="Normal" />
-                  <Button Content="Categoria" Height="23" HorizontalAlignment="Left" Margin="8,6,0,0" Name="btnCategoria" VerticalAlignment="Top" Width="79" Click="btnCategoria_Click" FontWeight="Normal" />
-                </Grid>
-              </GroupBox>
-              <GroupBox FontWeight="Bold" Foreground="#FFA74B4B" Header="Reportes" Height="58" HorizontalAlignment="Left" Margin="6,103,0,0" Name="groupBox4" VerticalAlignment="Top" Width="128">
-                <Grid>
-                  <Button Content="Reportes" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="btnReporte" VerticalAlignment="Top" Width="75" Click="btnReporte_Click" FontWeight="Normal" />
-                </Grid>
-              </GroupBox>
+            </Border>
+            <TextBlock FontFamily="Arial" FontSize="16" FontWeight="Bold" Foreground="#FF042271" Height="17" HorizontalAlignment="Center" Margin="85,8,113,482" Name="textBlock2" Text="titulo" TextAlignment="Center" VerticalAlignment="Center" Width="273" />
+            <Grid Margin="6,6,10,199">
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFFFFF" Offset="0.0" />
+                        <GradientStop Color="#f0f0f0" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Button Background="#FFC8C8C8" BorderBrush="#FF585858" Click="btnCerrar_Click" Command="{Binding CancelCommand}" Cursor="Hand" Height="25" HorizontalAlignment="Right" Margin="5,0,9,3" Name="btnCerrar" Style="{DynamicResource CloseButtonStyle}" VerticalAlignment="Center" Visibility="{Binding CancelButtonVisibility}" Width="25" />
+                <TextBlock FontFamily="Arial" FontSize="13" FontWeight="Bold" Foreground="#313438" HorizontalAlignment="Left" Margin="7,0" Text="{Binding DialogTitle}" VerticalAlignment="Center" />
+                <TextBlock FontFamily="Arial" FontSize="16" FontWeight="Bold" Foreground="#FF042271" Height="18" HorizontalAlignment="Center" Margin="7,7,40,3" Name="txbTituloDelFormulario" Text="titulo" TextAlignment="Center" VerticalAlignment="Center" Width="349" />
             </Grid>
-          </Border>
-          <GroupBox FontWeight="Bold" Foreground="#FFA74B4B" Header="Sistema" Height="94" HorizontalAlignment="Left" Margin="152,13,0,0" Name="groupBox2" VerticalAlignment="Top" Width="128">
-            <Grid>
-              <Button Content="Apertura Sistema" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="btnApertura" VerticalAlignment="Top" Width="104" Click="btnApertura_Click" FontWeight="Normal" />
-              <Button Content="Cerrar Sistema" Height="23" HorizontalAlignment="Left" Margin="6,35,0,0" Name="btnCierraSistema" VerticalAlignment="Top" Width="104" Click="btnCierraSistema_Click" FontWeight="Normal" />
-            </Grid>
-          </GroupBox>
         </Grid>
-      </Border>
-      <TextBlock FontFamily="Arial" FontSize="16" FontWeight="Bold" Foreground="#FF042271" Height="17" HorizontalAlignment="Center" Margin="85,8,113,482" Name="textBlock2" Text="titulo" TextAlignment="Center" VerticalAlignment="Center" Width="273" />
-      <Grid Margin="6,6,10,199">
-        <Grid.Background>
-          <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-            <GradientStop Color="#FFFFFF" Offset="0.0" />
-            <GradientStop Color="#f0f0f0" Offset="1.0" />
-          </LinearGradientBrush>
-        </Grid.Background>
-        <Button Background="#FFC8C8C8" BorderBrush="#FF585858" Click="btnCerrar_Click" Command="{Binding CancelCommand}" Cursor="Hand" Height="25" HorizontalAlignment="Right" Margin="5,0,9,3" Name="btnCerrar" Style="{DynamicResource CloseButtonStyle}" VerticalAlignment="Center" Visibility="{Binding CancelButtonVisibility}" Width="25" />
-        <TextBlock FontFamily="Arial" FontSize="13" FontWeight="Bold" Foreground="#313438" HorizontalAlignment="Left" Margin="7,0" Text="{Binding DialogTitle}" VerticalAlignment="Center" />
-        <TextBlock FontFamily="Arial" FontSize="16" FontWeight="Bold" Foreground="#FF042271" Height="18" HorizontalAlignment="Center" Margin="7,7,40,3" Name="txbTituloDelFormulario" Text="titulo" TextAlignment="Center" VerticalAlignment="Center" Width="349" />
-      </Grid>
-    </Grid>
-  </Border>
+    </Border>
 </Window>    

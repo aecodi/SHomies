@@ -87,6 +87,8 @@ namespace SHomies.Tienda.Venta
                     new Core.Planilla.Trabajador(this.conexion)
                     .ListaPorCargo(new Core.Planilla.Cargo() { Id = 3 });
 
+                listaChicas = listaChicas.Where(x => x.Estado).ToList();
+
                 this.dtgFichadoras.Items.Clear();
 
                 this.SeteaFichadoras();
@@ -511,6 +513,10 @@ namespace SHomies.Tienda.Venta
                     MessageBox.Show(string.Concat("Ticket anulado con exito. Nro Ticket = ", this.orden.Id));
 
                     this.orden.Conexion.Commit();
+
+                    this.btnAnular.IsEnabled = false;
+                    this.lblAnulada1.Visibility = System.Windows.Visibility.Visible;
+                    this.lblAnulada2.Visibility = System.Windows.Visibility.Visible;
                 }
                 else
                 {
@@ -711,8 +717,5 @@ namespace SHomies.Tienda.Venta
             this.dtgFichadoras.ItemsSource = null;
             this.dtgFichadoras.ItemsSource = iData;
         }
-
-
-
     }
 }

@@ -78,6 +78,8 @@ namespace SHomies.Tienda.Venta
                 this.fichaje = new Core.Venta.Fichaje(this.conexion);
                 this.txbFichadora.Text = string.Empty;
                 this.txbTotalFichaje.Text = Funcion.FormatoDecimal(0);
+                this.txbTotalMulta.Text = Funcion.FormatoDecimal(0);
+                this.txtMontoPago.Text = Funcion.FormatoDecimal(0);
                 this.dtgFichaje.ItemsSource = null;
                 this.btnImprimir.IsEnabled = false;
 
@@ -85,7 +87,7 @@ namespace SHomies.Tienda.Venta
                 {
                     Id = Funcion.ConvertTo<int>(this.cboFichadora.SelectedValue, 0)
                 };
-                
+
                 this.dtgFichaje.ItemsSource =
                 new Clases.DetalleFichajeViewModel(this.conexion).GetFichaje(
                     this.fichaje.Fichadora,
@@ -95,7 +97,11 @@ namespace SHomies.Tienda.Venta
                 if (this.dtgFichaje.Items.Count == 0)
                     Funcion.EjecutaExepcionShomies("No existen datos registrados para esta fecha.");
 
-                this.txbTotalFichaje.Text = Funcion.FormatoDecimal(((List<Clases.DetalleFichajeViewModel>)this.dtgFichaje.ItemsSource).Sum(x => x.Monto));
+                var montoFichaje = ((List<Clases.DetalleFichajeViewModel>)this.dtgFichaje.ItemsSource).Sum(x => x.Monto);
+                var multa = new Core.Operaciones.Multa(this.conexion).GetMontoMulta(this.fichaje.Fichadora, this.auditoria.FechaSistema) * -1;
+                this.txbTotalFichaje.Text = Funcion.FormatoDecimal(montoFichaje);
+                this.txbTotalMulta.Text = Funcion.FormatoDecimal(multa);
+                this.txtMontoPago.Text = Funcion.FormatoDecimal((montoFichaje + multa));
                 this.txbFichadora.Text = this.cboFichadora.Text;
 
                 bool estaPagado = ((Clases.DetalleFichajeViewModel)this.dtgFichaje.Items[0]).Estado == 1;
@@ -117,7 +123,7 @@ namespace SHomies.Tienda.Venta
         {
             Ticket ticket = new Ticket();
             ticket.Title = "EL RELAX-PAGO FICHADORA";
-            ticket.AddCabecera("FICHADORA", Alineacion.Left, Alineacion.Left, 10, "ZULY");
+            ticket.AddCabecera("FICHADORA", Alineacion.Left, Alineacion.Left, 10, this.txbFichadora.Text);
             ticket.AddCabecera("CAJERO", Alineacion.Left, Alineacion.Left, 10, this.auditoria.Usuario.UserName);
             ticket.AddCabecera("FECHA PAGO", Alineacion.Left, Alineacion.Left, 10, this.auditoria.FechaSistema.ToShortDateString());
             ticket.AddCebeceraDetalle("Orden", Alineacion.Left, Alineacion.Left, 6);
@@ -128,7 +134,9 @@ namespace SHomies.Tienda.Venta
             {
                 ticket.AddItemsDetails(detalle.Orden.Id, detalle.FechaProceso.ToShortDateString(), Funcion.FormatoDecimal(detalle.Monto));
             }
-            ticket.AddTotal("Total Fichaje", Alineacion.Right, Alineacion.Right, 25, Funcion.FormatoDecimal(Funcion.ConvertTo<decimal>(this.txbTotalFichaje.Text)));
+            ticket.AddTotal("Fichaje", Alineacion.Right, Alineacion.Right, 25, Funcion.FormatoDecimal(Funcion.ConvertTo<decimal>(this.txbTotalFichaje.Text)));
+            ticket.AddTotal("Multa", Alineacion.Right, Alineacion.Right, 25, Funcion.FormatoDecimal(Funcion.ConvertTo<decimal>(this.txbTotalMulta.Text)));
+            ticket.AddTotal("TOTAL PAGO", Alineacion.Right, Alineacion.Right, 25, Funcion.FormatoDecimal(Funcion.ConvertTo<decimal>(this.txtMontoPago.Text)));
 
             ticket.itemsPie.Add("Los esperamos");
             String impresora = System.Configuration.ConfigurationSettings.AppSettings["Impresora"].ToString();
@@ -159,7 +167,7 @@ namespace SHomies.Tienda.Venta
                         {
                             Id = this.fichaje.Fichadora.Id
                         },
-                        Monto = Funcion.ConvertTo<decimal>(this.txbTotalFichaje.Text),
+                        Monto = Funcion.ConvertTo<decimal>(this.txtMontoPago.Text),
                         Auditoria = this.auditoria
                     };
 

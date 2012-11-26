@@ -299,6 +299,8 @@ namespace SHomies.Tienda.Reportes.datos {
             
             private global::System.Data.DataColumn columnfechaproceso;
             
+            private global::System.Data.DataColumn columntotalFichaje;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public FichajeDataTable() {
@@ -414,6 +416,14 @@ namespace SHomies.Tienda.Reportes.datos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn totalFichajeColumn {
+                get {
+                    return this.columntotalFichaje;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -449,7 +459,7 @@ namespace SHomies.Tienda.Reportes.datos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public FichajeRow AddFichajeRow(string nombrefichadora, decimal montofichaje, int orden, string producto, int cantidad, decimal precioventa, decimal total, decimal comision, decimal totalComision, System.DateTime fechaproceso) {
+            public FichajeRow AddFichajeRow(string nombrefichadora, decimal montofichaje, int orden, string producto, int cantidad, decimal precioventa, decimal total, decimal comision, decimal totalComision, System.DateTime fechaproceso, decimal totalFichaje) {
                 FichajeRow rowFichajeRow = ((FichajeRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         nombrefichadora,
@@ -461,7 +471,8 @@ namespace SHomies.Tienda.Reportes.datos {
                         total,
                         comision,
                         totalComision,
-                        fechaproceso};
+                        fechaproceso,
+                        totalFichaje};
                 rowFichajeRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowFichajeRow);
                 return rowFichajeRow;
@@ -494,6 +505,7 @@ namespace SHomies.Tienda.Reportes.datos {
                 this.columncomision = base.Columns["comision"];
                 this.columntotalComision = base.Columns["totalComision"];
                 this.columnfechaproceso = base.Columns["fechaproceso"];
+                this.columntotalFichaje = base.Columns["totalFichaje"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -519,6 +531,8 @@ namespace SHomies.Tienda.Reportes.datos {
                 base.Columns.Add(this.columntotalComision);
                 this.columnfechaproceso = new global::System.Data.DataColumn("fechaproceso", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfechaproceso);
+                this.columntotalFichaje = new global::System.Data.DataColumn("totalFichaje", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntotalFichaje);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -821,6 +835,22 @@ namespace SHomies.Tienda.Reportes.datos {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal totalFichaje {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableFichaje.totalFichajeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'totalFichaje\' in table \'Fichaje\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFichaje.totalFichajeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsnombrefichadoraNull() {
                 return this.IsNull(this.tableFichaje.nombrefichadoraColumn);
             }
@@ -937,6 +967,18 @@ namespace SHomies.Tienda.Reportes.datos {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetfechaprocesoNull() {
                 this[this.tableFichaje.fechaprocesoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IstotalFichajeNull() {
+                return this.IsNull(this.tableFichaje.totalFichajeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SettotalFichajeNull() {
+                this[this.tableFichaje.totalFichajeColumn] = global::System.Convert.DBNull;
             }
         }
         

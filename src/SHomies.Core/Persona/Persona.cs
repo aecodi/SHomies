@@ -21,9 +21,44 @@ namespace SHomies.Core.Persona
         {
             this.Conexion = iConexion;
         }
-        public bool Registrar()
+        public virtual void Nuevo()
         {
-            throw new NotImplementedException();
+            try
+            {
+                this.Conexion.NombrePaquete = "administra_persona";
+                this.Conexion.QuerySQL = "nuevo";
+
+                this.Conexion.SetValorParametroInput("i_nombrecompleto", this.NombreCompleto);
+                this.Conexion.SetValorParametroInput("i_tipodocumento", this.TipoDocumento.Codigo);
+                this.Conexion.SetValorParametroInput("i_nrodocumento", this.NumeroDocumento);
+
+                this.Conexion.ExecuteProcedure();
+                this.Conexion.ValidaRespuesta("o_codigo", "o_mensaje");
+
+                this.Id = this.Conexion.GetValue<int>("o_id");
+            }
+            catch (Exception)
+            {                
+                throw;
+            }
+        }
+        public virtual void UpdateName()
+        {
+            try
+            {
+                this.Conexion.NombrePaquete = "administra_persona";
+                this.Conexion.QuerySQL = "updatename";
+                
+                this.Conexion.SetValorParametroInput("i_nombrecompleto", this.NombreCompleto);
+                this.Conexion.SetValorParametroInput("i_id", this.Id);
+
+                this.Conexion.ExecuteProcedure();
+                this.Conexion.ValidaRespuesta("o_codigo", "o_mensaje");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

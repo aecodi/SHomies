@@ -106,6 +106,28 @@ namespace SHomies.Core.Reportes
             }
             return data;
         }
-
+        public DataSet ReportePagoFichadorasEntreFechas(DateTime fechaInicio,
+                                                        DateTime fechaFin)
+        {
+            DataSet data = new DataSet("PagoFichadora");
+            try
+            {
+                this.Conexion.NombrePaquete = "administra_reportes";
+                this.Conexion.QuerySQL = "pago_fichaje_entre_fechas";
+                this.Conexion.SetValorParametroInput("i_fechainicio", fechaInicio);
+                this.Conexion.SetValorParametroInput("i_fechafinal", fechaFin);
+                this.Conexion.ExecuteProcedure(out data);
+                this.Conexion.ValidaRespuesta("o_codigo", "o_mensaje");
+                if (Funcion.IsDataSetEmpty(data))
+                    Funcion.EjecutaExepcionShomies("No existen datos para este dia.");
+                if (Funcion.IsDataTableEmpty(data.Tables[0]))
+                    Funcion.EjecutaExepcionShomies("No existen datos para este dia.");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return data;
+        }
     }
 }

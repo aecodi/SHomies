@@ -13,6 +13,6 @@ namespace SHomies.Core.Interfaces
         string NumeroDocumento { get; set; }
         string NombreCompleto { get; set; }
 
-        bool Registrar();
+        void Nuevo();
     }
 }

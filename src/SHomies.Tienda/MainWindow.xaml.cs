@@ -19,7 +19,7 @@ namespace SHomies.Tienda
     public partial class MainWindow : Window
     {
         private SHomies.Conexion.IConexion conexion;
-       private Core.Sistema.AuditoriaSistema auditoria;
+        private Core.Sistema.AuditoriaSistema auditoria;
 
         public MainWindow()
         {
@@ -36,7 +36,7 @@ namespace SHomies.Tienda
         {
             try
             {
-                Inventario.AdministraCategoria formularioCategoria = new Inventario.AdministraCategoria(this.conexion);                 
+                Inventario.AdministraCategoria formularioCategoria = new Inventario.AdministraCategoria(this.conexion);
                 formularioCategoria.ShowDialog();
             }
             catch (Exception)
@@ -93,7 +93,7 @@ namespace SHomies.Tienda
         private void btnApertura_Click(object sender, RoutedEventArgs e)
         {
             try
-            {                
+            {
                 Sistema.Aperturar aperturar = new Sistema.Aperturar(auditoria, this.conexion);
                 aperturar.ShowDialog();
             }
@@ -110,7 +110,7 @@ namespace SHomies.Tienda
         private void btnCierraSistema_Click(object sender, RoutedEventArgs e)
         {
             try
-            {                
+            {
                 Sistema.Cerrar cierreSistema = new Sistema.Cerrar(auditoria, this.conexion);
                 cierreSistema.ShowDialog();
             }
@@ -127,7 +127,7 @@ namespace SHomies.Tienda
         private void btnVentaFichadora_Click(object sender, RoutedEventArgs e)
         {
             try
-            {                
+            {
                 this.auditoria.GetUltimaFechaSistema();
                 Venta.VentaFichadora ventaFichadora = new Venta.VentaFichadora(auditoria, this.conexion);
                 ventaFichadora.ShowDialog();
@@ -145,7 +145,7 @@ namespace SHomies.Tienda
         private void btnReporte_Click(object sender, RoutedEventArgs e)
         {
             try
-            {                
+            {
                 this.auditoria.GetUltimaFechaSistema();
 
                 Reportes.ReportesDelDia reportes = new Reportes.ReportesDelDia(auditoria, this.conexion);
@@ -169,6 +169,42 @@ namespace SHomies.Tienda
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.txbTituloDelFormulario.Text = "Opciones del Menu";
+        }
+
+        private void btnFichadora_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Mantenimiento.AdministraFichadora fichadora =
+                    new Mantenimiento.AdministraFichadora(this.conexion);
+                fichadora.ShowDialog();
+            }
+            catch (Utilitario.ExepcionSHomies sx)
+            {
+                MessageBox.Show(sx.Message);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error cargando formulario");
+            }
+        }
+
+        private void btnMultas_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                auditoria.ValidaAperturaSistema();
+                Venta.Multa nuevaMulta = new Venta.Multa(auditoria, this.conexion);
+                nuevaMulta.ShowDialog();
+            }
+            catch (Utilitario.ExepcionSHomies sx)
+            {
+                MessageBox.Show(sx.Message);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error cargando formulario");
+            }
         }
 
 

@@ -1,0 +1,74 @@
+﻿<Window x:Class="SHomies.Tienda.Venta.Multa"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MultasFichadora" 
+        Height="457" 
+        Width="279"
+        Background="{x:Null}"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+    <Grid Height="419" Width="260">
+        <Border CornerRadius="10,0,10,0" BorderBrush="#FF9B9A9A" Background="#FF9B9A9A" BorderThickness="1" Height="419" Margin="0,0,5,0">
+            <Grid>
+                <Button Name="btnCerrar" Style="{DynamicResource CloseButtonStyle}" Background="#FFC8C8C8" BorderBrush="#FF585858" Click="btnCerrar_Click" Command="{Binding CancelCommand}" Cursor="Hand" Margin="217,6,6,380" Height="24" Width="24"/>
+                <TextBlock Height="23" HorizontalAlignment="Left" Margin="19,10,0,0" Name="txtTitulo" Text="Multas Fichadora" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="14"/>
+                <Border CornerRadius="10,0,10,0" BorderBrush="#FF9B9A9A" Background="White" BorderThickness="1" Margin="6,39,5,6">
+                    <Grid>
+                        <Border BorderBrush="#FFA28433" 
+                                BorderThickness="1" 
+                                Height="45" 
+                                HorizontalAlignment="Left" 
+                                Margin="158,286,0,0" 
+                                Name="border1" 
+                                VerticalAlignment="Top" 
+                                Width="61" 
+                                CornerRadius="10,0,10,0"></Border>
+                        <DataGrid AutoGenerateColumns="False" VerticalScrollBarVisibility="Visible" GridLinesVisibility="None" HeadersVisibility="None" Height="171" HorizontalAlignment="Left" Margin="16,43,0,0" Name="dtgFichadoras" VerticalAlignment="Top" Width="210" BorderBrush="Silver" BorderThickness="0,0,0,1" CanUserAddRows="False" SelectionChanged="dtgFichadoras_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Fichadora" IsReadOnly="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="#FFE0E0E0" 
+                                                        BorderThickness="1" 
+                                                        HorizontalAlignment="Left" 
+                                                        Height="41" 
+                                                        VerticalAlignment="Top" 
+                                                        Width="186">
+                                                <Grid HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="186" Margin="0">
+                                                    <TextBlock Height="16" 
+                                                                   HorizontalAlignment="Left" 
+                                                                   Margin="10,8,0,0" 
+                                                                   Text="{Binding Path=Nombres}" 
+                                                                   VerticalAlignment="Center" 
+                                                                   Width="141" 
+                                                                   FontFamily="Calibri" 
+                                                                   FontSize="14" 
+                                                                   FontWeight="Bold"
+                                                                   TextAlignment="Left"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                            <ScrollViewer Style="{StaticResource FavsScrollViewer}" />
+                        </DataGrid>
+                        <Border Background="#4E87D4" BorderBrush="#4E87D4" BorderThickness="1" Height="34" HorizontalAlignment="Left" Margin="49,6,0,0" Name="border7" VerticalAlignment="Top" Width="176"></Border>
+                        <Image Height="35" HorizontalAlignment="Left" Margin="15,6,0,0" Source="../Images/Buttons/fichadora.jpg" Stretch="Fill" VerticalAlignment="Top" Width="34" />
+                        <Grid Height="33" Name="grid8" Width="173" Margin="52,6,15,331">
+                            <TextBox Height="23" HorizontalAlignment="Left" TextChanged="txtBuscar_TextChanged" Margin="6,5,0,0" Name="txtBuscar" VerticalAlignment="Top" Width="161" KeyUp="txtBuscar_KeyUp" />
+                        </Grid>
+                        <Grid Height="42" Name="grid4" Width="62" Margin="157,286,21,42">
+                            <Button Content="Grabar" Height="38" Width="36" HorizontalAlignment="Left" Margin="14,6,0,0" Name="btnGrabar" VerticalAlignment="Top" Template="{StaticResource StyleButtonGrabar}" Click="btnGrabar_Click" IsEnabled="True" />
+                        </Grid>
+                        <TextBlock Height="23" HorizontalAlignment="Left" Margin="16,224,0,0" Name="textBlock1" Text="Fichadora :" VerticalAlignment="Top" Width="76" FontWeight="Bold" TextAlignment="Left" FontSize="14" />
+                        <TextBox Height="23" HorizontalAlignment="Left" Margin="110,220,0,0" Name="txtFichadora" VerticalAlignment="Top" Width="109" IsEnabled="True" IsReadOnly="True" />
+                        <TextBlock Height="23" HorizontalAlignment="Left" Margin="16,249,0,0" Name="textBlock2" Text="Monto      :" VerticalAlignment="Top" Width="85" FontWeight="Bold" TextAlignment="Left" FontSize="14" />
+                        <TextBox Height="23" HorizontalAlignment="Left" Margin="110,249,0,0" Name="txtMontoMulta" VerticalAlignment="Top" Width="109" IsEnabled="True"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>  

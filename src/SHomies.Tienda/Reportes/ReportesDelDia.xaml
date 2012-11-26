@@ -37,6 +37,7 @@
               <RadioButton Content="Reporte Pago Fichadora" Height="16" Visibility="Hidden" HorizontalAlignment="Left" Margin="14,60,0,0" Name="rbtPagoFichadora" VerticalAlignment="Top" Checked="rbtPagoFichadora_Checked" />
               <RadioButton Content="Reporte Fichaje" Height="16" HorizontalAlignment="Left" Margin="14,82,0,0" Name="rbtDetallePagoFichadora" VerticalAlignment="Top" Checked="rbtDetallePagoFichadora_Checked" />
                             <RadioButton Content="Reporte Por Fichadora" Height="16" HorizontalAlignment="Left" Margin="14,104,0,0" Name="rbtFichadora" VerticalAlignment="Top" AllowDrop="False" Checked="rbtFichadora_Checked" />
+                            <RadioButton Content="Reporte Pago Fichaje" Height="16" HorizontalAlignment="Left" Margin="14,60,0,0" Name="rbtPagoTotalFichadora" VerticalAlignment="Top" Checked="rbtPagoTotalFichadora_Checked" />
                         </Grid>
           </GroupBox>
         </Grid>

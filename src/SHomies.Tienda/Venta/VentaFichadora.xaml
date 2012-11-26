@@ -21,8 +21,13 @@
                         <Grid Height="429" Name="grid3" Width="361">
                             <Button Content="Pagar" Height="38" HorizontalAlignment="Left" Margin="14,385,0,0" Name="btnPagar" VerticalAlignment="Top" Width="29" IsEnabled="False" Click="btnPagar_Click" Template="{StaticResource StyleButtonPagar}"/>
                             <Button Content="Imprimir" Height="38" Margin="49,385,268,0" Name="btnImprimir" VerticalAlignment="Top" Click="btnImprimir_Click" IsEnabled="False" Template="{StaticResource StyleButtonImprimir}"/>
-                            <TextBlock FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Height="15" HorizontalAlignment="Center" Margin="166,372,112,42" Name="textBlock2" Text="Total Fichaje" VerticalAlignment="Center" Width="83"   TextAlignment="Right"/>
-                            <TextBlock FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Height="15" HorizontalAlignment="Center" Margin="256,372,40,42" Name="txbTotalFichaje" Text="0.00" VerticalAlignment="Center" Width="65"  TextAlignment="Right"/>
+                            <TextBlock FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Height="15" HorizontalAlignment="Center" Margin="170,369,108,0" Name="textBlock2" Text="Fichaje :" VerticalAlignment="Top" Width="83"   TextAlignment="Right"/>
+                            <TextBlock FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Height="15" HorizontalAlignment="Center" Margin="256,369,40,45" Name="txbTotalFichaje" Text="0.00" VerticalAlignment="Center" Width="65"  TextAlignment="Right"/>
+                            <TextBlock FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Height="15" HorizontalAlignment="Center" Margin="170,385,108,29" Name="textBlock6" Text="Multas :" VerticalAlignment="Center" Width="83"   TextAlignment="Right"/>
+                            <TextBlock FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Red" Height="15" HorizontalAlignment="Center" Margin="256,385,40,29" Name="txbTotalMulta" Text="0.00" VerticalAlignment="Center" Width="65"  TextAlignment="Right"/>
+                            <TextBlock FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Height="15" HorizontalAlignment="Center" Margin="210,404,108,0" Name="textBlock7" Text="TOTAL :" VerticalAlignment="Top" Width="43"   TextAlignment="Right"/>
+                            <TextBlock  FontFamily="Arial" FontSize="12" FontWeight="Bold" Foreground="Black" Height="15" HorizontalAlignment="Center" Margin="272,404,40,0" Name="txtMontoPago" Text="0.00" VerticalAlignment="Top" Width="49" TextAlignment="Right" />
+                            <Separator Height="9" Foreground="Black" HorizontalAlignment="Left" Margin="192,397,0,0" Name="separator1" VerticalAlignment="Top" Width="137" />
                         </Grid>
                     </Border>
                     <GroupBox Header="Filtro" Height="88" HorizontalAlignment="Left" Margin="12,10,0,0" Name="groupBox1" VerticalAlignment="Top" Width="359">
@@ -38,7 +43,18 @@
                     </GroupBox>
                     <GroupBox Header="Detalle" Height="274" HorizontalAlignment="Left" Margin="12,104,0,0" Name="groupBox2" VerticalAlignment="Top" Width="358">
                         <Grid>
-                            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" GridLinesVisibility="None" HorizontalGridLinesBrush="#FFDBDBDB" ItemsSource="{Binding Collection}" Margin="7,29,10,5" Name="dtgFichaje" RowDetailsVisibilityMode="Collapsed" SelectionMode="Single">
+                            <DataGrid AutoGenerateColumns="False"
+                                      CanUserAddRows="False" 
+                                      CanUserDeleteRows="False"
+                                      CanUserResizeColumns="False"
+                                      CanUserResizeRows="False" 
+                                      GridLinesVisibility="None" 
+                                      HorizontalGridLinesBrush="#FFDBDBDB"
+                                      ItemsSource="{Binding Collection}" 
+                                      Margin="7,29,10,5" Name="dtgFichaje"
+                                      RowDetailsVisibilityMode="Collapsed" 
+                                      HeadersVisibility="Column"
+                                      SelectionMode="Single">
                                 <DataGrid.Columns>
                                     <DataGridTemplateColumn Header="Orden" IsReadOnly="True" Width="300">
                                         <DataGridTemplateColumn.CellTemplate>

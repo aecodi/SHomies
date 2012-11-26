@@ -56,5 +56,48 @@ namespace SHomies.Core.Planilla
 
             return trabajadores;
         }
+
+        public override void Nuevo()
+        {
+            try
+            {
+                base.Nuevo();
+
+                this.Conexion.NombrePaquete = "administra_trabajador";
+                this.Conexion.QuerySQL = "nuevo";
+
+                this.Conexion.SetValorParametroInput("i_id", this.Id);
+                this.Conexion.SetValorParametroInput("i_fechaingreso", this.FechaIngreso.ToShortDateString());
+                this.Conexion.SetValorParametroInput("i_idcargo", this.Cargo.Id);
+
+                this.Conexion.ExecuteProcedure();
+                this.Conexion.ValidaRespuesta("o_codigo", "o_mensaje");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public void ChangeEstado()
+        {
+            try
+            {
+                this.Conexion.NombrePaquete = "administra_trabajador";
+                this.Conexion.QuerySQL = "changeestado";
+
+                this.Conexion.SetValorParametroInput("i_id", this.Id);
+                this.Conexion.SetValorParametroInput("i_estado", this.Estado);
+
+                this.Conexion.ExecuteProcedure();
+                this.Conexion.ValidaRespuesta("o_codigo", "o_mensaje");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
     }
 }

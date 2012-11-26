@@ -10,7 +10,8 @@
                 <ResourceDictionary Source="/Themes/buttons.xaml" />
                 <ResourceDictionary Source="/Themes/ScrollBar.xaml" />
                 <ResourceDictionary Source="/Themes/datagrid.xaml" />
-
+                <ResourceDictionary Source="/Themes/Windows.xaml" />
+                <ResourceDictionary Source="/Themes/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>

@@ -91,7 +91,7 @@ namespace SHomies.Tienda.Venta
         {
             try
             {
-                decimal totalComision = this.orden.DetalleProducto.Sum(x => x.Producto.Comision);
+                decimal totalComision = this.orden.DetalleProducto.Sum(x => x.Producto.Comision * x.Cantidad);
                 decimal montoFichaje = totalComision / (this.orden.Fichadoras.Count == 0 ? 1 : this.orden.Fichadoras.Count);
 
                 List<Clases.DetalleFichajeViewModel> detalle =
